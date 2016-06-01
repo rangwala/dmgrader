@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'fileuploader/style.css' %}" />
+
+
+<form action="create" method="post" enctype="multipart/form-data">{% csrf_token %}
+<ul>
+{{form.as_ul}}
+</ul>
+
+<input type="submit" name="submit" value="Create Article">
+</form>
+
+{% endblock %}

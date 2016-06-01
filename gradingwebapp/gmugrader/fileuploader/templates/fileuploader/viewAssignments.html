@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+
+{% block content %}
+
+{% if assignments.count > 0 %}
+
+{% for a in assignments %}
+    <div>
+    <a href="{% url 'fileuploader:viewAssignmentsDetail' a.id %}">{{ a.id}}</a></li>
+    <h2>{{a.id}} <a href="/{{a.ground_truth}}">{{ a.name}} {{a.pub_date}}</a> {{a.uploaded_cnt}}</h2>
+    </div>
+
+{% endfor %}
+
+{% endif %}
+
+
+<p> None to show! </p>
+
+{% endblock %}

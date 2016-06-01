@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{%block content %}
+<h1>{{ assignment.name}}</h1>
+<ul>
+<li>Published {{assignment.pub_date}}
+</li>
+
+
+<li> Description {{assignment.description}}
+</li>
+
+<li>
+Total Uploaded Count {{assignment.uploaded_cnt}}
+</li>
+</ul>
+
+{% if submissions.count > 0 %}
+
+<table>
+{% for s in submissions %}
+    <tr>
+    <td> {{s.user}} </td> <td>{{s.assignment}} </td> <td> {{s.attempt}}</td><td> {{s.score}}</td> <td> {{s.solution_file}} </td></tr>  
+{%endfor %}
+</table>
+{%endif %}
+
+
+{% endblock %}
+
+
