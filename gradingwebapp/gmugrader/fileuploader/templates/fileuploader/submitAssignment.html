@@ -3,15 +3,22 @@
 {% block content %}
 {% load staticfiles %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'fileuploader/style.css' %}" />
-
 
 <form action="submitAssignment" method="post" enctype="multipart/form-data">{% csrf_token %}
-<ul>
+
+
+<nav id="nav-topic">
+<ul >
 {{form.as_ul}}
 </ul>
+</nav>
 
-<input type="submit" name="submit" value="submitAssignment">
+<div class="padded-row">
+
+<input type="submit" name="submit" value="Submit Assignment">
+
+</div>
 </form>
+
 
 {% endblock %}
