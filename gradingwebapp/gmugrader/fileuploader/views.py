@@ -163,11 +163,12 @@ def submitChosenAssignment (request,assignment_id):
             a = form.save(commit=False)
             a.user = request.user
             print a.user
+            assignment  = get_object_or_404 (Assignment, pk = assignment_id)
+            a.assignment = assignment
             a.save()
             # update the counter
             # also update the score
-            assignment  = get_object_or_404 (Assignment, pk = assignment_id)
-            obj1 = Assignment.objects.filter(name = assignment) #.update(uploaded_cnt = uploaded_cnt + 1)
+            obj1 = Assignment.objects.filter(name = a.assignment) #.update(uploaded_cnt = uploaded_cnt + 1)
             for items in obj1:
                 items.uploaded_cnt = items.uploaded_cnt + 1
                 counter = items.uploaded_cnt
@@ -183,12 +184,14 @@ def submitChosenAssignment (request,assignment_id):
                     items.attempt = counter
                     items.score = computeMetrics (items.solution_file, truthFile)
                     items.save()
+            print "I am here"
             return HttpResponseRedirect('viewSubmissions.html')
     else:
         form = submissionAssignmentForm()
         args = {}
         args.update(csrf (request))
         args['form'] = form
+        #return HttpResponseRedirect('viewSubmissions.html')
         return render_to_response('fileuploader/submitChosenAssignment.html',args)
 
 
