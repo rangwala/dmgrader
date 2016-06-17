@@ -7,7 +7,7 @@ from django.core.context_processors import csrf
 
 from django.conf import settings
 
-from forms import submissionForm, AssignmentForm, ArticleForm, UserForm, UserProfileForm
+from forms import submissionAssignmentForm, submissionForm, AssignmentForm, ArticleForm, UserForm, UserProfileForm
 from .models import Article, Assignment, Solution 
 
 from django.template import RequestContext
@@ -152,6 +152,47 @@ def createAssignment (request):
         args.update(csrf(request))
         args['form'] = form
         return render_to_response('fileuploader/createAssignment.html',args)
+
+
+
+@login_required
+def submitChosenAssignment (request,assignment_id):
+    if request.POST:
+        form = submissionAssignmentForm(request.POST, request.FILES)
+        if form.is_valid():
+            a = form.save(commit=False)
+            a.user = request.user
+            print a.user
+            a.save()
+            # update the counter
+            # also update the score
+            assignment  = get_object_or_404 (Assignment, pk = assignment_id)
+            obj1 = Assignment.objects.filter(name = assignment) #.update(uploaded_cnt = uploaded_cnt + 1)
+            for items in obj1:
+                items.uploaded_cnt = items.uploaded_cnt + 1
+                counter = items.uploaded_cnt
+                truthFile = items.ground_truth
+                items.save()
+            # gets all the files back... 
+            # we need a table of student - attempts - etc
+
+            obj2 = Solution.objects.filter (assignment = a.assignment)
+
+            for items in obj2:
+                if items.solution_file == a.solution_file:
+                    items.attempt = counter
+                    items.score = computeMetrics (items.solution_file, truthFile)
+                    items.save()
+            return HttpResponseRedirect('viewSubmissions.html')
+    else:
+        form = submissionAssignmentForm()
+        args = {}
+        args.update(csrf (request))
+        args['form'] = form
+        return render_to_response('fileuploader/submitChosenAssignment.html',args)
+
+
+
 
 @login_required
 def submitAssignment (request):

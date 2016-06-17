@@ -16,6 +16,14 @@ class AssignmentForm(forms.ModelForm):
         model = Assignment
         fields = ('name','description','ground_truth')
 
+
+class submissionAssignmentForm (forms.ModelForm):
+    class Meta:
+        model = Solution
+        fields = ['solution_file']
+    
+
+
 class submissionForm (forms.ModelForm):
     class Meta:
         model = Solution

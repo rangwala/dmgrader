@@ -8,7 +8,7 @@
 {% if assignments.count > 0 %}
 
 <table >
-<tr> <th>  Assignment </th><th> Published </th> <th> Count  </th>  <th> Details </th></tr>
+<tr> <th>  Assignment </th><th> Published </th> <th> Count  </th>  <th> Details </th> <th> Submit </th></tr>
 
 {% for a in assignments %}
     <tr>
@@ -18,6 +18,10 @@
     </td>
     <td>
     <a href="{% url 'fileuploader:viewAssignmentsDetail' a.id %}"> Details </a></td>
+    <td>
+    <a href="{% url 'fileuploader:submitChosenAssignment' a.id %}"> Submit </a> </td>
+
+    </td>
     </tr>
 
 
