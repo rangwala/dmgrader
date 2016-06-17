@@ -184,8 +184,10 @@ def submitChosenAssignment (request,assignment_id):
                     items.attempt = counter
                     items.score = computeMetrics (items.solution_file, truthFile)
                     items.save()
-            print "I am here"
-            return HttpResponseRedirect('viewSubmissions.html')
+            args={}
+            args.update (csrf (request))
+            #create a splash page
+            return render_to_response('fileuploader/viewSubmissions.html',args)
     else:
         form = submissionAssignmentForm()
         args = {}
