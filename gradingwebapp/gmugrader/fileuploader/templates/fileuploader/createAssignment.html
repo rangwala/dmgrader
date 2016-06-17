@@ -3,15 +3,23 @@
 {% block content %}
 {% load staticfiles %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'fileuploader/style.css' %}" />
 
 
 <form action="createAssignment" method="post" enctype="multipart/form-data">{% csrf_token %}
-<ul>
-{{form.as_ul}}
-</ul>
+{% for field in form.visible_fields %}
+    <div class="fieldWrapper">
+        {{ field.errors }}
+        {{ field.label_tag}} {{field}}
+    </div>
+{% endfor %}
+
+
+
+<div class="padded-row">
 
 <input type="submit" name="submit" value="createAssignment">
+
+</div>
 </form>
 
 {% endblock %}
