@@ -187,12 +187,16 @@ def submitChosenAssignment (request,assignment_id):
             args={}
             args.update (csrf (request))
             #create a splash page
-            return render_to_response('fileuploader/viewSubmissions.html',args)
+            return render_to_response('fileuploader/thanksSubmissions.html',args)
+            #return render_to_response('fileuploader/viewSubmissions.html',args)
     else:
+        assignment  = get_object_or_404 (Assignment, pk = assignment_id)
         form = submissionAssignmentForm()
         args = {}
         args.update(csrf (request))
         args['form'] = form
+        args['assignment'] = assignment
+        args['user'] = request.user
         #return HttpResponseRedirect('viewSubmissions.html')
         return render_to_response('fileuploader/submitChosenAssignment.html',args)
 
@@ -235,6 +239,11 @@ def submitAssignment (request):
         return render_to_response('fileuploader/submitAssignment.html',args)
 
 
+def thanksSubmissions (request):
+   return render_to_response ('fileuploader/thanksSubmissions.html') 
+
+
+
 def viewSubmissions (request):
     args = {}
     args.update (csrf (request))
@@ -254,7 +263,7 @@ def viewAssignmentsDetail (request,assignment_id):
     args.update (csrf (request))
     assignment  = get_object_or_404 (Assignment, pk = assignment_id)
     args['assignment'] = assignment
-    args['submissions'] = Solution.objects.filter (assignment = assignment_id)
+    args['submissions'] = Solution.objects.filter (assignment = assignment_id).order_by('-score')
     return render (request, 'fileuploader/viewAssignmentsDetail.html', args)  
 
 
