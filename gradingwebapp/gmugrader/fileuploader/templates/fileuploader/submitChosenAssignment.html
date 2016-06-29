@@ -4,6 +4,14 @@
 {% load staticfiles %}
 
 
+<div class="padded-row">
+<b> User: </b> {{user.username}}    
+
+<b> Assignment: </b>  {{assignment.name}} 
+</div>
+
+
+
 <form method="post" enctype="multipart/form-data">{% csrf_token %}
 
 

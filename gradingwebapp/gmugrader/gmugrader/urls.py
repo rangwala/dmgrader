@@ -20,4 +20,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^polls/', include('polls.urls')),
     url(r'^fileuploader/',include('fileuploader.urls')),
+    url(r'^tinymce/', include('tinymce.urls')),
+
 ]

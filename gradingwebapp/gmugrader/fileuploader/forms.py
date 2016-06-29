@@ -5,6 +5,9 @@ from models import Solution, Article, Assignment
 from django.contrib.auth.models import User
 from models import UserProfile
 
+#tinymce editor
+#from tinymce.models import HTMLField
+
 class ArticleForm(forms.ModelForm):
     
     class Meta:
@@ -15,7 +18,6 @@ class AssignmentForm(forms.ModelForm):
     class Meta:
         model = Assignment
         fields = ('name','description','ground_truth')
-
 
 class submissionAssignmentForm (forms.ModelForm):
     class Meta:

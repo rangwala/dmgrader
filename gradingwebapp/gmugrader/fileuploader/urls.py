@@ -6,7 +6,6 @@ from . import views
 
 app_name='fileuploader'
 urlpatterns=[
-    #url('^', include('django.contrib.auth.urls')), 
     url(r'^login/$', views.login, name ='login'),
     url(r'^auth/$', views.auth_view, name='auth_view'),
     url(r'^logout$',views.logout_page, name='logout_page'),
@@ -23,12 +22,11 @@ urlpatterns=[
     url(r'^createAssignment.html$', views.createAssignment, name='createAssignment'),
     url(r'^viewAssignments.html$', views.viewAssignments, name='viewAssignments'),
     url(r'^\/viewAssignmentsDetail\/(?P<assignment_id>.*)\/$', views.viewAssignmentsDetail, name='viewAssignmentsDetail'),
-    #url(r'^submitChosenAssignment.html$', views.submitChosenAssignment, name='submitChosenAssignment'),
     url(r'^submitChosenAssignment\/(?P<assignment_id>.*)\/$', views.submitChosenAssignment, name='submitChosenAssignment'),
     url(r'^submitAssignment.html$', views.submitAssignment, name='submitAssignment'),
     url(r'^submitAssignment$', views.submitAssignment, name='submitAssignment'),
     url(r'^viewSubmissions.html$', views.viewSubmissions, name='viewSubmissions'),
     url(r'^viewSubmissions$', views.viewSubmissions, name='viewSubmissions'),
-   # url(r'^login/$',views.user_login, name="user_login"),
-   # url(r'^login.html$',views.user_login, name="user_login"),
+    url(r'^thanksSubmissions.html$', views.thanksSubmissions, name='thanksSubmissions'),
+    url(r'^thanksSubmissions$', views.thanksSubmissions, name='thanksSubmissions'),
 ]   
