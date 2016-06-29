@@ -82,6 +82,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'gmugrader.wsgi.application'
 
 
+
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
@@ -119,7 +120,11 @@ APPEND_SLASH = False
 
 STATIC_URL = '/fileuploader/static/'
 
+STATIC_ROOT = '/fileuploader/static/'
 LOGIN_URL = '/fileuploader/login/'
 
 #LOGIN_REDIRECT_URL = ('..')
+CKEDITOR_UPLOAD_PATH = MEDIA_ROOT
+CKEDITOR_BASEPATH = os.path.join(STATIC_ROOT, "ckeditor/")
+
 
