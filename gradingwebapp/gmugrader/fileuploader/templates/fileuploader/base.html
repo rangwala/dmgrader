@@ -8,6 +8,9 @@
 
     <script src="{% get_static_prefix %}js/jquery-2.0.0.min.js"></script>
     <script src="{% get_static_prefix %}js/ajax.js"></script>
+    {% load staticfiles %}
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
 
 </head>
 
