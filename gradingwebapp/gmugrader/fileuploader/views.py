@@ -16,6 +16,13 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 
 
+from sklearn import metrics 
+import numpy as np
+
+import matplotlib.pyplot as plt
+
+
+
 def computeMetrics (predfile, solfile):
     myPredFile = open (settings.MEDIA_ROOT + str(predfile), 'r')
     #myPredFile = open (settings.MEDIA_ROOT +  '/solution_files/sol.txt', 'r')
@@ -26,6 +33,16 @@ def computeMetrics (predfile, solfile):
         predictions.append(predline)
     for trueline in myTrueFile:
         ground.append(trueline)
+    
+    print np.mean (ground == predictions)    
+    
+    print metrics.classification_report (ground, predictions)
+    
+    return 1.0 * np.mean (ground == predictions)
+    
+
+
+    """
     corr = 0
     for i in range (len(ground)):
         if (ground[i] == predictions[i]):
@@ -36,9 +53,8 @@ def computeMetrics (predfile, solfile):
 
     return (1.0 * corr)/len(ground)
 
-
+"""
     
-# this is only allowable by the ADMIN/INSTRUCTOR 
 
 
 
@@ -264,6 +280,18 @@ def viewAssignmentsDetail (request,assignment_id):
     assignment  = get_object_or_404 (Assignment, pk = assignment_id)
     args['assignment'] = assignment
     args['submissions'] = Solution.objects.filter (assignment = assignment_id).order_by('-score')
+    
+    # create a plot 
+    scores_so_far = Solution.objects.values_list('score').filter (assignment = assignment_id)
+    #print np.array (scores_so_far) 
+    plt.plot (np.array(scores_so_far), 'ro')
+    
+
+    pngfilename =  str('test' + assignment_id + '.png')
+    plt.savefig(settings.MEDIA_ROOT + pngfilename)
+    args['figplot'] = pngfilename
+
+    #plt.show ()
     return render (request, 'fileuploader/viewAssignmentsDetail.html', args)  
 
 

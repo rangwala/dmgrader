@@ -11,12 +11,22 @@
 <li> Description {{assignment.description | safe}}
 </li>
 
+
 <li>
 Total Uploaded Count {{assignment.uploaded_cnt}}
 </li>
 </ul>
 
-{% if submissions.count > 0 %}
+
+{{figplot}}
+
+<img src = {% MEDIA_ROOT %} "{{figplot}}" >  </img>
+
+
+
+
+
+  {% if submissions.count > 0 %}
 
 <table>
 {% for s in submissions %}
