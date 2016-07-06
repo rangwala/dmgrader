@@ -297,6 +297,25 @@ def viewAssignmentsDetail (request,assignment_id):
 
 
 
+def editAssignment (request,assignment_id):
+    assignment  = get_object_or_404 (Assignment, pk = assignment_id)
+    if request.POST:
+        print "I am here"
+        form = AssignmentForm(request.POST, request.FILES, instance=assignment)
+        if form.is_valid():
+            a = form.save()
+            print "Form is valid"
+            #viewAssignmentsDetail (request, assignment_id)
+            return HttpResponseRedirect('../../viewAssignments.html')
+
+    else:
+        form = AssignmentForm(instance=assignment)
+        args = {}
+        args.update(csrf(request))
+        args['form'] = form
+        return render(request, 'fileuploader/editAssignment.html',args)
+
+
 
 
 def create(request):
