@@ -111,7 +111,10 @@ USE_L10N = True
 
 USE_TZ = True
 
+#MEDIA_ROOT='/files/'
 MEDIA_ROOT='/Users/huzefa/dmgrader/gradingwebapp/files/'
+
+MEDIA_URL = '/files/'
 
 APPEND_SLASH = False
 

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load staticfiles %}
-
+{% load static %}
 {%block content %}
 <h1>{{ assignment.name}}</h1>
 <ul>
@@ -20,7 +20,7 @@ Total Uploaded Count {{assignment.uploaded_cnt}}
 
 {{figplot}}
 
-<img src = {% MEDIA_ROOT %} "{{figplot}}" >  </img>
+<img src = "{% MEDIA_URL %}{{figplot}}" >  </img>
 
 
 
