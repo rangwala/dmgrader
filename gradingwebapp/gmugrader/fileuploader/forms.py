@@ -7,7 +7,8 @@ from models import UserProfile
 
 #tinymce editor
 #from tinymce.models import HTMLField
-from ckeditor.widgets import CKEditorWidget
+from tinymce.widgets import TinyMCE
+
 
 
 class ArticleForm(forms.ModelForm):
@@ -17,7 +18,7 @@ class ArticleForm(forms.ModelForm):
         fields = ('title','fileshot')
 
 class AssignmentForm(forms.ModelForm):
-    description  = forms.CharField (widget=CKEditorWidget(config_name='default')) 
+    description  = forms.CharField(widget=TinyMCE(attrs={'cols':100, 'rows': 80}))
     class Meta:
         model = Assignment
         fields = ('name','description','ground_truth')

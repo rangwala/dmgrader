@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #'fileuploader',
-    'ckeditor',
+    'tinymce',
 ]
 
 MIDDLEWARE_CLASSES = [

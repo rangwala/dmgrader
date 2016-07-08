@@ -16,7 +16,6 @@ import uuid
 
 from datetime import datetime    
 
-from ckeditor.fields import RichTextField
 
 #from tinymce.models import HTMLField
 
@@ -33,7 +32,7 @@ def get_upload_file_name(instance,filename):
 class Assignment (models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name            = models.CharField (max_length=200)
-    description     = RichTextField() #models.TextField()
+    description     = models.TextField()
     ground_truth    = models.FileField(upload_to=get_upload_file_name)
     pub_date        = models.DateTimeField('date  published',auto_now_add=True,blank=True)
     uploaded_cnt    = models.IntegerField(default=0)
