@@ -3,6 +3,8 @@ create a super user [Accessible only to super user]
 - Delete A Submission
 - Delete All Submissions
 
+-- User menu is through the interface.
+
 
 
 
