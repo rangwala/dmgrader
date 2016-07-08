@@ -296,6 +296,17 @@ def viewAssignmentsDetail (request,assignment_id):
 
 
 
+def deleteAssignment (request, assignment_id):
+    
+    obj2 = Solution.objects.filter (assignment = assignment_id).count()
+    if obj2 > 0:
+        u1 = Solution.objects.filter(assignment=assignment_id).delete()
+    
+    u2 = Assignment.objects.get(pk=assignment_id).delete()
+    return render_to_response ('fileuploader/thanksSubmissions.html') 
+
+
+
 
 def editAssignment (request,assignment_id):
     assignment  = get_object_or_404 (Assignment, pk = assignment_id)

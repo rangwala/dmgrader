@@ -24,6 +24,7 @@ urlpatterns=[
     url(r'^viewAssignments.html$', views.viewAssignments, name='viewAssignments'),
     url(r'^\/viewAssignmentsDetail\/(?P<assignment_id>.*)\/$', views.viewAssignmentsDetail, name='viewAssignmentsDetail'),
     url(r'^\/viewAssignmentsDetail\/(?P<assignment_id>.*)\/edit$', views.editAssignment, name='editAssignment'),
+    url(r'^\/viewAssignmentsDetail\/(?P<assignment_id>.*)\/delete$', views.deleteAssignment, name='deleteAssignment'),
     url(r'^submitChosenAssignment\/(?P<assignment_id>.*)\/$', views.submitChosenAssignment, name='submitChosenAssignment'),
     url(r'^submitAssignment.html$', views.submitAssignment, name='submitAssignment'),
     url(r'^submitAssignment$', views.submitAssignment, name='submitAssignment'),
