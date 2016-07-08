@@ -15,7 +15,6 @@ from django.contrib import auth
 
 from django.contrib.auth.decorators import login_required
 
-
 from sklearn import metrics 
 import numpy as np
 
@@ -295,16 +294,18 @@ def viewAssignmentsDetail (request,assignment_id):
     return render (request, 'fileuploader/viewAssignmentsDetail.html', args)  
 
 
-
+@login_required
 def deleteAssignment (request, assignment_id):
+   if request.user.is_superuser: 
+        obj2 = Solution.objects.filter (assignment = assignment_id).count()
+        if obj2 > 0:
+            u1 = Solution.objects.filter(assignment=assignment_id).delete()
     
-    obj2 = Solution.objects.filter (assignment = assignment_id).count()
-    if obj2 > 0:
-        u1 = Solution.objects.filter(assignment=assignment_id).delete()
-    
-    u2 = Assignment.objects.get(pk=assignment_id).delete()
-    return render_to_response ('fileuploader/thanksSubmissions.html') 
-
+        u2 = Assignment.objects.get(pk=assignment_id).delete()
+        return render_to_response ('fileuploader/thanksSubmissions.html') 
+   else:
+        html = "<html><body>You are not authorized to permit this action</body></html>" 
+        return HttpResponse(html)
 
 
 
