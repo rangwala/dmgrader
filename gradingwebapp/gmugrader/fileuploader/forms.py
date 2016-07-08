@@ -18,7 +18,7 @@ class ArticleForm(forms.ModelForm):
         fields = ('title','fileshot')
 
 class AssignmentForm(forms.ModelForm):
-    description  = forms.CharField(widget=TinyMCE(attrs={'cols':80, 'rows': 40, 'class':'myTextarea'}))
+    description  = forms.CharField(widget=TinyMCE(attrs={'cols':80, 'rows': 40} ))
     class Meta:
         model = Assignment
         fields = ('name','description','ground_truth')

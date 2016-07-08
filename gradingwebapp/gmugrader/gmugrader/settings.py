@@ -127,7 +127,15 @@ STATIC_ROOT = '/fileuploader/static/'
 LOGIN_URL = '/fileuploader/login/'
 
 #LOGIN_REDIRECT_URL = ('..')
-CKEDITOR_UPLOAD_PATH = MEDIA_ROOT
-CKEDITOR_BASEPATH = os.path.join(STATIC_ROOT, "ckeditor/")
+#CKEDITOR_UPLOAD_PATH = MEDIA_ROOT
+#CKEDITOR_BASEPATH = os.path.join(STATIC_ROOT, "ckeditor/")
+
+
+TINYMCE_DEFAULT_CONFIG = {
+        'plugins': "table,spellchecker,paste,searchreplace",
+        'theme': "advanced",
+}
+TINYMCE_SPELLCHECKER = True
+#TINYMCE_COMPRESSOR = True
 
 

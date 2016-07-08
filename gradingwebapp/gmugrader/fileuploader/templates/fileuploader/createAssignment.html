@@ -11,11 +11,7 @@
 {% for field in form.visible_fields %}
     <div class="fieldWrapper">
         {{ field.errors }}
-        {% if field.label_tag in ['description'] %} 
-            {{ field.label_tag}} <textarea id="myTextArea" > {{field}}  </textarea>
-        {% elif %}
-            {{field.label_tag}} {{field}}
-        {% endif %}    
+        {{ field.label_tag}} {{field}}  
     </div>
 {% endfor %}
 
