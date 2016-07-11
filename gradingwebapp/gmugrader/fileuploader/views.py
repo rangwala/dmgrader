@@ -181,6 +181,8 @@ def submitChosenAssignment (request,assignment_id):
             a.user = request.user
             print a.user
             assignment  = get_object_or_404 (Assignment, pk = assignment_id)
+            if timezone.now() > assignment.deadline_date:
+                return HttpResponse("Past Due")
             a.assignment = assignment
             a.save()
             # update the counter
@@ -200,6 +202,7 @@ def submitChosenAssignment (request,assignment_id):
                 if items.solution_file == a.solution_file:
                     items.attempt = counter
                     items.score = computeMetrics (items.solution_file, truthFile)
+                    items.submission_time = timezone.now()
                     items.save()
             args={}
             args.update (csrf (request))

@@ -48,6 +48,7 @@ class Solution (models.Model):
     user            = models.ForeignKey(User, on_delete=models.CASCADE)
     attempt         = models.IntegerField(default=0)
     score           = models.DecimalField(max_digits=5,decimal_places=2,default=Decimal(-1.0))
+    submission_time = models.DateTimeField('date submitted',auto_now_add=True,blank=True)
 
 class UserProfile (models.Model):
     user         = models.OneToOneField (User, on_delete=models.CASCADE)
