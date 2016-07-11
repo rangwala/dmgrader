@@ -17,6 +17,9 @@ Allow control of how many submissions allowed per 24 hour cycle ?
 
 OK <--> Allow control of deadlines. 
 
+Make Date Input Nice: https://github.com/asaglimbeni/django-datetime-widget/tree/master/dateTimeExample/formexample
+https://github.com/asaglimbeni/django-datetime-widget
+
 
 Test Data
 Train Data
