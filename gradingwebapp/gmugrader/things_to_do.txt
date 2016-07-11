@@ -12,8 +12,10 @@ create a super user [Accessible only to super user]
 Validate Submitted Assignments [Reject Submissions]
 
 Allow control of Sampling and Evaluation Metric to use for ranking.
+
 Allow control of how many submissions allowed per 24 hour cycle ? 
-Allow control of deadlines. 
+
+OK <--> Allow control of deadlines. 
 
 
 Test Data
