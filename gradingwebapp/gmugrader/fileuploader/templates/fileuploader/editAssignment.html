@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load staticfiles %}
+
+
+
+
+
+<form action="edit" method="post" enctype="multipart/form-data">{% csrf_token %}
+{{form.media}}
+{% for field in form.visible_fields %}
+    <div class="fieldWrapper">
+        {{ field.errors }}
+        {{ field.label_tag}} {{field}}
+    </div>
+{% endfor %}
+
+
+
+<div class="padded-row">
+
+<input type="submit" name="submit" value="Save">
+
+</div>
+</form>
+
+{% endblock %}
