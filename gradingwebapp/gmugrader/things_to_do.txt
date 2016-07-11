@@ -1,10 +1,26 @@
 create a super user [Accessible only to super user]
-- Delete Assignment
+
+- Delete Assignment [DONE]
+
+
 - Delete A Submission
 - Delete All Submissions
 
 -- User menu is through the interface.
 
+
+Validate Submitted Assignments [Reject Submissions]
+
+Allow control of Sampling and Evaluation Metric to use for ranking.
+Allow control of how many submissions allowed per 24 hour cycle ? 
+Allow control of deadlines. 
+
+
+Test Data
+Train Data
+Description
+Format of the File Example
+Ground Truth
 
 
 

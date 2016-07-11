@@ -7,13 +7,16 @@
 
 {% if assignments.count > 0 %}
 
+
+Current Time: {{currenttime}}
+
 <table >
-<tr> <th>  Assignment </th><th> Published </th> <th> Count  </th>  <th> Details </th> <th> Submit </th></tr>
+<tr> <th>  Assignment </th><th> Deadline </th> <th> Count  </th>  <th> Details </th> <th> Submit </th></tr>
 
 {% for a in assignments %}
     <tr>
     <td> {{a.name}} </td>
-    <td> {{a.pub_date}} </td>
+    <td> {{a.deadline_date}} </td>
     <td> {{a.uploaded_cnt}} 
     </td>
     <td>

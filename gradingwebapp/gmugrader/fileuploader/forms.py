@@ -9,6 +9,10 @@ from models import UserProfile
 #from tinymce.models import HTMLField
 from tinymce.widgets import TinyMCE
 
+from django.utils import timezone
+
+from django.forms import SplitDateTimeWidget 
+
 
 
 class ArticleForm(forms.ModelForm):
@@ -21,7 +25,7 @@ class AssignmentForm(forms.ModelForm):
     description  = forms.CharField(widget=TinyMCE(attrs={'cols':80, 'rows': 40} ))
     class Meta:
         model = Assignment
-        fields = ('name','description','ground_truth')
+        fields = ('name','description','ground_truth','deadline_date')
 
 class submissionAssignmentForm (forms.ModelForm):
     class Meta:

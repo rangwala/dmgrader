@@ -20,7 +20,9 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 
+import datetime
 
+from django.utils import timezone
 
 def computeMetrics (predfile, solfile):
     myPredFile = open (settings.MEDIA_ROOT + str(predfile), 'r')
@@ -270,6 +272,8 @@ def viewAssignments (request):
     args = {}
     args.update(csrf(request))
     args['assignments'] = Assignment.objects.all()
+    #UTC TIME args['currenttime'] = datetime.datetime.now()
+    args['currenttime'] = timezone.now()
     return render_to_response('fileuploader/viewAssignments.html',args)
 
 
