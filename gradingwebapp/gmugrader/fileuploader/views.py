@@ -184,6 +184,9 @@ def submitChosenAssignment (request,assignment_id):
             assignment  = get_object_or_404 (Assignment, pk = assignment_id)
             if timezone.now() > assignment.deadline_date:
                 return HttpResponse("Past Due")
+            
+            truthFile = assignment.ground_truth
+
             a.assignment = assignment
             a.save()
             # update the counter
