@@ -11,9 +11,9 @@ from tinymce.widgets import TinyMCE
 
 from django.utils import timezone
 
-from django.forms import SplitDateTimeWidget 
 
 
+from datetimewidget.widgets import DateTimeWidget
 
 class ArticleForm(forms.ModelForm):
     
@@ -23,6 +23,7 @@ class ArticleForm(forms.ModelForm):
 
 class AssignmentForm(forms.ModelForm):
     description  = forms.CharField(widget=TinyMCE(attrs={'cols':80, 'rows': 40} ))
+    deadline_date = forms.DateTimeField(widget=DateTimeWidget(usel10n=True, bootstrap_version=3)) 
     class Meta:
         model = Assignment
         fields = ('name','description','ground_truth','deadline_date')
