@@ -188,12 +188,10 @@ def submitChosenAssignment (request,assignment_id):
             a.save()
             # update the counter
             # also update the score
-            obj1 = Assignment.objects.filter(name = a.assignment) #.update(uploaded_cnt = uploaded_cnt + 1)
-            for items in obj1:
-                items.uploaded_cnt = items.uploaded_cnt + 1
-                counter = items.uploaded_cnt
-                truthFile = items.ground_truth
-                items.save()
+            obj1 = Assignment.objects.get(pk = a.assignment_id) #.update(uploaded_cnt = uploaded_cnt + 1)
+            truthFile = obj1.ground_truth
+            obj1.uploaded_cnt = obj1.uploaded_cnt + 1
+            counter = obj1.uploaded_cnt
             # gets all the files back... 
             # we need a table of student - attempts - etc
 
@@ -203,15 +201,21 @@ def submitChosenAssignment (request,assignment_id):
                 if items.solution_file == a.solution_file:
                     items.attempt = counter
                     items.score = computeMetrics (items.solution_file, truthFile)
+                    flag_save = 1
                     if items.score == -100:
                         htmlmessage = "<html><body> Your Prediction File has incorrect number of entries </body></html>"
+                        flag_save = 0
                         return HttpResponse(htmlmessage)
-                    items.submission_time = timezone.now()
-                    items.save()
-            args={}
-            args.update (csrf (request))
+                    else:
+                        items.submission_time = timezone.now()
+                        items.save()
+            
+            if flag_save == 1: 
+                obj1.save()
+                args={}
+                args.update (csrf (request))
             #create a splash page
-            return render_to_response('fileuploader/thanksSubmissions.html',args)
+                return render_to_response('fileuploader/thanksSubmissions.html',args)
             #return render_to_response('fileuploader/viewSubmissions.html',args)
     else:
         assignment  = get_object_or_404 (Assignment, pk = assignment_id)
