@@ -37,6 +37,10 @@ class Assignment (models.Model):
     pub_date        = models.DateTimeField('date  published',auto_now_add=True,blank=True)
     deadline_date   = models.DateTimeField('deadline',blank=True,auto_now_add=False)
     uploaded_cnt    = models.IntegerField(default=0)
+    train_data      = models.FileField(upload_to=get_upload_file_name,blank=True)
+    test_data       = models.FileField(upload_to=get_upload_file_name,blank=True)
+    format_example  = models.FileField(upload_to=get_upload_file_name,blank=True)
+    sampling_private=models.IntegerField (default=50) 
     #best_score      = models.DecimalField (max_digits=5, decimal_places=2, default = Decimal (-1.0))
 
     def __unicode__(self):

@@ -26,7 +26,7 @@ class AssignmentForm(forms.ModelForm):
     deadline_date = forms.DateTimeField(widget=DateTimeWidget(usel10n=True, bootstrap_version=3)) 
     class Meta:
         model = Assignment
-        fields = ('name','description','ground_truth','deadline_date')
+        fields = ('name','description','ground_truth','deadline_date','test_data','train_data','format_example')
 
 class submissionAssignmentForm (forms.ModelForm):
     class Meta:
