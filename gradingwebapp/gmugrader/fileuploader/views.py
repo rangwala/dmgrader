@@ -35,11 +35,12 @@ def computeMetrics (predfile, solfile):
     for trueline in myTrueFile:
         ground.append(trueline)
     
-    print np.mean (ground == predictions)    
-    
-    print metrics.classification_report (ground, predictions)
-    
-    return 1.0 * np.mean (ground == predictions)
+    if len(predictions) != len(ground):
+        return -100.0
+    else:
+        print np.mean (ground == predictions)    
+        print metrics.classification_report (ground, predictions)
+        return 1.0 * np.mean (ground == predictions)
     
 
 
@@ -202,6 +203,9 @@ def submitChosenAssignment (request,assignment_id):
                 if items.solution_file == a.solution_file:
                     items.attempt = counter
                     items.score = computeMetrics (items.solution_file, truthFile)
+                    if items.score == -100:
+                        htmlmessage = "<html><body> Your Prediction File has incorrect number of entries </body></html>"
+                        return HttpResponse(htmlmessage)
                     items.submission_time = timezone.now()
                     items.save()
             args={}

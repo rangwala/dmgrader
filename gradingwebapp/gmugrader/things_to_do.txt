@@ -8,8 +8,10 @@ create a super user [Accessible only to super user]
 
 -- User menu is through the interface.
 
+Validate Submitted Assignments [Reject Submissions] 
+-- Check for columns
+-- Check for entries
 
-Validate Submitted Assignments [Reject Submissions]
 
 Allow control of Sampling and Evaluation Metric to use for ranking.
 
