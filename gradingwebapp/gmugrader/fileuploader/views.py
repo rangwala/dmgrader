@@ -195,11 +195,12 @@ def submitChosenAssignment (request,assignment_id):
             truthFile = obj1.ground_truth
             obj1.uploaded_cnt = obj1.uploaded_cnt + 1
             counter = obj1.uploaded_cnt
+            obj1.save() 
             # gets all the files back... 
             # we need a table of student - attempts - etc
 
             obj2 = Solution.objects.filter (assignment = a.assignment)
-
+            print len(obj2)
             for items in obj2:
                 if items.solution_file == a.solution_file:
                     items.attempt = counter
@@ -211,14 +212,13 @@ def submitChosenAssignment (request,assignment_id):
                         return HttpResponse(htmlmessage)
                     else:
                         items.submission_time = timezone.now()
+                        items.status = 'OK'
                         items.save()
             
-            if flag_save == 1: 
-                obj1.save()
-                args={}
-                args.update (csrf (request))
+            args={}
+            args.update (csrf (request))
             #create a splash page
-                return render_to_response('fileuploader/thanksSubmissions.html',args)
+            return render_to_response('fileuploader/thanksSubmissions.html',args)
             #return render_to_response('fileuploader/viewSubmissions.html',args)
     else:
         assignment  = get_object_or_404 (Assignment, pk = assignment_id)

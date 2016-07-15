@@ -31,7 +31,7 @@ Total Uploaded Count {{assignment.uploaded_cnt}}
 <table>
 {% for s in submissions %}
     <tr>
-    <td> {{s.user}} </td> <td>{{s.submission_time}} </td> <td> {{s.attempt}}</td><td> {{s.score}}</td> <td> {{s.solution_file}} </td></tr>  
+    <td> {{s.user}} </td> <td>{{s.submission_time}} </td> <td> {{s.attempt}}</td> <td> {{s.status}} <td> {{s.score}}</td> <td> {{s.solution_file}} </td></tr>  
 {%endfor %}
 </table>
 {%endif %}
