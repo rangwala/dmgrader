@@ -23,10 +23,11 @@ class ArticleForm(forms.ModelForm):
 
 class AssignmentForm(forms.ModelForm):
     description  = forms.CharField(widget=TinyMCE(attrs={'cols':80, 'rows': 40} ))
-    deadline_date = forms.DateTimeField(widget=DateTimeWidget(usel10n=True, bootstrap_version=3)) 
+    deadline_date = forms.DateTimeField(widget=DateTimeWidget(usel10n=True, bootstrap_version=3))
+    #samping_private=forms.IntegerField(label='1-100')
     class Meta:
         model = Assignment
-        fields = ('name','description','ground_truth','deadline_date','test_data','train_data','format_example')
+        fields = ('name','description','ground_truth','deadline_date','test_data','train_data','format_example','sampling_private')
 
 class submissionAssignmentForm (forms.ModelForm):
     class Meta:
