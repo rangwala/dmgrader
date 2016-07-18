@@ -46,7 +46,7 @@ def computeSampledMetrics (predfile, solfile,samplesize):
         sample_predictions  = predictions [test_index]
         print np.mean (sample_ground == sample_predictions)    
         print metrics.classification_report (sample_ground, sample_predictions)
-    return 1.0 * np.mean (sample_ground == sample_predictions)
+    return metrics.accuracy_score (sample_ground, sample_predictions)
     
 
 
@@ -80,7 +80,7 @@ def computeMetrics (predfile, solfile):
     else:
         print np.mean (ground == predictions)    
         print metrics.classification_report (ground, predictions)
-        return 1.0 * np.mean (ground == predictions)
+        return metrics.accuracy_score (ground,  predictions)
     
 
 
