@@ -15,7 +15,8 @@ from django.contrib import auth
 
 from django.contrib.auth.decorators import login_required
 
-from sklearn import metrics 
+from sklearn import metrics, cross_validation
+
 import numpy as np
 
 import matplotlib.pyplot as plt
@@ -23,6 +24,45 @@ import matplotlib.pyplot as plt
 import datetime
 
 from django.utils import timezone
+
+
+def computeSampledMetrics (predfile, solfile,samplesize):
+    myPredFile = open (settings.MEDIA_ROOT + str(predfile), 'r')
+    #myPredFile = open (settings.MEDIA_ROOT +  '/solution_files/sol.txt', 'r')
+    myTrueFile = open (settings.MEDIA_ROOT + str(solfile), 'r')
+    predictions = []
+    ground      = []
+    for predline in myPredFile:
+        predictions.append(predline)
+    for trueline in myTrueFile:
+        ground.append(trueline)
+    
+    ground = np.array (ground)
+    predictions= np.array (predictions)
+
+    rs = cross_validation.ShuffleSplit (len(ground), n_iter=1, test_size=0.01 * samplesize, random_state=0)
+    for train_index, test_index in rs:
+        sample_ground       = ground [test_index]
+        sample_predictions  = predictions [test_index]
+        print np.mean (sample_ground == sample_predictions)    
+        print metrics.classification_report (sample_ground, sample_predictions)
+    return 1.0 * np.mean (sample_ground == sample_predictions)
+    
+
+
+    """
+    corr = 0
+    for i in range (len(ground)):
+        if (ground[i] == predictions[i]):
+            corr = corr+1;
+            print corr
+    myPredFile.close()
+    myTrueFile.close()
+
+    return (1.0 * corr)/len(ground)
+
+"""
+
 
 def computeMetrics (predfile, solfile):
     myPredFile = open (settings.MEDIA_ROOT + str(predfile), 'r')
@@ -204,7 +244,7 @@ def submitChosenAssignment (request,assignment_id):
             for items in obj2:
                 if items.solution_file == a.solution_file:
                     items.attempt = counter
-                    items.score = computeMetrics (items.solution_file, truthFile)
+                    items.score =       computeMetrics (items.solution_file, truthFile)
                     flag_save = 1
                     if items.score == -100:
                         htmlmessage = "<html><body> Your Prediction File has incorrect number of entries </body></html>"
@@ -213,6 +253,8 @@ def submitChosenAssignment (request,assignment_id):
                     else:
                         items.submission_time = timezone.now()
                         items.status = 'OK'
+                        #Compute the Public_SCORE
+                        items.public_score = computeSampledMetrics (items.solution_file, truthFile, obj1.sampling_private) 
                         items.save()
             
             args={}
