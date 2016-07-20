@@ -229,7 +229,7 @@ def submitChosenAssignment (request,assignment_id):
             if timezone.now() > assignment.deadline_date:
                 return HttpResponse("Past Due")
             
-            min_dt = timezone.now () - timedelta (hours = 24)
+            min_dt = timezone.now () - timedelta (hours=24)
             max_dt = timezone.now()
             previous_today = Solution.objects.filter(assignment=assignment_id,user=a.user,status='OK',submission_time__range = (min_dt,max_dt)).count() #submission_time > (timezone.now()-timedelta(1)))
             
