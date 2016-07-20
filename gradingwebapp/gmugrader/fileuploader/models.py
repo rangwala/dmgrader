@@ -16,6 +16,7 @@ import uuid
 
 from datetime import datetime    
 
+from django.db.models import Count, Avg, Max, Min
 
 #from tinymce.models import HTMLField
 

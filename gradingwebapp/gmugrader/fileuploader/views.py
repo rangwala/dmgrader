@@ -25,6 +25,7 @@ import datetime
 
 from django.utils import timezone
 
+from django.db.models import Max, Min
 
 def computeSampledMetrics (predfile, solfile,samplesize):
     myPredFile = open (settings.MEDIA_ROOT + str(predfile), 'r')
@@ -331,6 +332,30 @@ def viewAssignments (request):
     #UTC TIME args['currenttime'] = datetime.datetime.now()
     args['currenttime'] = timezone.now()
     return render_to_response('fileuploader/viewAssignments.html',args)
+
+
+
+
+#student view
+@login_required
+def viewPublicRankings (request, assignment_id):
+    args = {}
+    args.update (csrf (request))
+    assignment = get_object_or_404 (Assignment, pk = assignment_id)
+    args ['assignment'] = assignment
+    subset_entries = Solution.objects.filter (assignment=assignment_id).filter(status = "OK").order_by('user','-submission_time') 
+    u = "None"
+    leaderboard = [] 
+    i = 0
+    for entry in subset_entries:
+        if entry.user != u:
+            u = entry.user
+            leaderboard.append(entry)
+            print u
+            i = i + 1
+    print leaderboard
+    args['submissions'] = leaderboard
+    return render (request, 'fileuploader/viewPublicRankings.html', args)  
 
 
 def viewAssignmentsDetail (request,assignment_id):

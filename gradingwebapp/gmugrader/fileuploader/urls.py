@@ -22,6 +22,7 @@ urlpatterns=[
     url(r'^createAssignment.html$', views.createAssignment, name='createAssignment'),
     url(r'^\/viewAssignments.html$', views.viewAssignments, name='viewAssignments'),
     url(r'^viewAssignments.html$', views.viewAssignments, name='viewAssignments'),
+    url(r'^\/viewPublicRankings\/(?P<assignment_id>.*)\/$', views.viewPublicRankings, name='viewPublicRankings'),
     url(r'^\/viewAssignmentsDetail\/(?P<assignment_id>.*)\/$', views.viewAssignmentsDetail, name='viewAssignmentsDetail'),
     url(r'^\/viewAssignmentsDetail\/(?P<assignment_id>.*)\/edit$', views.editAssignment, name='editAssignment'),
     url(r'^\/viewAssignmentsDetail\/(?P<assignment_id>.*)\/delete$', views.deleteAssignment, name='deleteAssignment'),
