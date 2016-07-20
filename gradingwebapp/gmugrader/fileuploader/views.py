@@ -25,6 +25,9 @@ import datetime
 
 from django.utils import timezone
 
+from datetime import datetime, timedelta
+
+
 from django.db.models import Max, Min
 
 def computeSampledMetrics (predfile, solfile,samplesize):
@@ -226,6 +229,13 @@ def submitChosenAssignment (request,assignment_id):
             if timezone.now() > assignment.deadline_date:
                 return HttpResponse("Past Due")
             
+            min_dt = timezone.now () - timedelta (hours = 24)
+            max_dt = timezone.now()
+            previous_today = Solution.objects.filter(assignment=assignment_id,user=a.user,status='OK',submission_time__range = (min_dt,max_dt)).count() #submission_time > (timezone.now()-timedelta(1)))
+            
+            if previous_today >= assignment.num_subs_per_day:
+                return HttpResponse("Exceeded Submission For The Day")
+
             truthFile = assignment.ground_truth
 
             a.assignment = assignment

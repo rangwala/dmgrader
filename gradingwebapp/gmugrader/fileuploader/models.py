@@ -43,9 +43,11 @@ class Assignment (models.Model):
     format_example  = models.FileField(upload_to=get_upload_file_name) 
     sampling_private=models.IntegerField (default=50) 
     #best_score      = models.DecimalField (max_digits=5, decimal_places=2, default = Decimal (-1.0))
-
+    num_subs_per_day = models.IntegerField (default=5)
+    
     def __unicode__(self):
         return self.name
+
 
 class Solution (models.Model):
     assignment      = models.ForeignKey(Assignment, on_delete=models.CASCADE)
