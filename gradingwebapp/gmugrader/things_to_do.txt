@@ -31,8 +31,8 @@ Format of the File Example
 Ground Truth
 
 
-Think of User View of All His Submissions
-Think of User View of All the Competition i.e., the best
+* Think of User View of All His Submissions
+* Think of User View of All the Competition i.e., the best
 
 
 Think of Admin View  of All Submission

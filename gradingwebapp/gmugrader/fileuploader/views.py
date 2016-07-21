@@ -216,6 +216,14 @@ def createAssignment (request):
         return render_to_response('fileuploader/createAssignment.html',args)
 
 
+def viewErrorMessage(message):
+    args = {}
+    args['message'] = message
+    return render_to_response ('fileuploader/viewErrorMessage.html', args)
+
+
+
+
 
 @login_required
 def submitChosenAssignment (request,assignment_id):
@@ -227,14 +235,23 @@ def submitChosenAssignment (request,assignment_id):
             print a.user
             assignment  = get_object_or_404 (Assignment, pk = assignment_id)
             if timezone.now() > assignment.deadline_date:
-                return HttpResponse("Past Due")
-            
+                htmlmessage = "Past Deadline Date"
+                args = {}
+                args.update (csrf (request))
+                args['message'] = htmlmessage
+                return render_to_response ('fileuploader/viewErrorMessage.html',args)
+
+
             min_dt = timezone.now () - timedelta (hours=24)
             max_dt = timezone.now()
             previous_today = Solution.objects.filter(assignment=assignment_id,user=a.user,status='OK',submission_time__range = (min_dt,max_dt)).count() #submission_time > (timezone.now()-timedelta(1)))
             
             if previous_today >= assignment.num_subs_per_day:
-                return HttpResponse("Exceeded Submission For The Day")
+                htmlmessage = "You have already submitted the allowed submissions in a 24-hour cycle" 
+                args = {}
+                args.update (csrf (request))
+                args['message'] = htmlmessage
+                return render_to_response ('fileuploader/viewErrorMessage.html',args)
 
             truthFile = assignment.ground_truth
 
@@ -258,9 +275,13 @@ def submitChosenAssignment (request,assignment_id):
                     items.score =       computeMetrics (items.solution_file, truthFile)
                     flag_save = 1
                     if items.score == -100:
-                        htmlmessage = "<html><body> Your Prediction File has incorrect number of entries </body></html>"
-                        flag_save = 0
-                        return HttpResponse(htmlmessage)
+                        htmlmessage = "Your Prediction File has incorrect number of entries"
+                        args = {}
+                        args.update (csrf (request))
+                        args['message'] = htmlmessage
+                        return render_to_response ('fileuploader/viewErrorMessage.html',args)
+
+                        #return HttpResponse(htmlmessage)
                     else:
                         items.submission_time = timezone.now()
                         items.status = 'OK'
