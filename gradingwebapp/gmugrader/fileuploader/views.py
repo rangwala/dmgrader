@@ -7,7 +7,7 @@ from django.core.context_processors import csrf
 
 from django.conf import settings
 
-from forms import submissionAssignmentForm, submissionForm, AssignmentForm, ArticleForm, UserForm, UserProfileForm
+from forms import submissionAssignmentForm, submissionForm, AssignmentForm, ArticleForm, UserForm # UserProfileForm
 from .models import Article, Assignment, Solution 
 
 from django.template import RequestContext
@@ -514,22 +514,22 @@ def create(request):
 def register(request):
     if request.POST:
         uf = UserForm(request.POST, prefix='user')
-        upf= UserProfileForm(request.POST, prefix='userprofile')
-        if uf.is_valid() * upf.is_valid():
+        #upf= UserProfileForm(request.POST, prefix='userprofile')
+        if uf.is_valid():
             user = uf.save()
             user.set_password(user.password)    
             user.save()
 
-            userprofile = upf.save(commit=False)
-            userprofile.user=user
-            userprofile.save()
+            #userprofile = upf.save(commit=False)
+            #userprofile.user=user
+            #userprofile.save()
             return HttpResponseRedirect('/fileuploader/login')
     else:
         uf = UserForm(prefix='user')
-        upf= UserProfileForm(prefix='userprofile')
+        #upf= UserProfileForm(prefix='userprofile')
     
-    return render_to_response('register.html', dict(userform=uf,userprofileform=upf), context_instance=RequestContext(request))
-
+    #return render_to_response('register.html', dict(userform=uf,userprofileform=upf), context_instance=RequestContext(request))
+    return render_to_response('register.html', dict(userform=uf), context_instance=RequestContext(request))
 
 #user = User.objects.create_user(username=request.POST['login'], password=request.POST['password'])
 

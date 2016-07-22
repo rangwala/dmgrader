@@ -66,11 +66,12 @@ class Solution (models.Model):
     )
     status          = models.CharField (max_length =2, choices=STATUS_CHOICES, default=ERROR)
 
+'''
 class UserProfile (models.Model):
     user         = models.OneToOneField (User, on_delete=models.CASCADE)
     tot_attempts = models.IntegerField (default=0)
     team_name    = models.CharField (max_length=200)
-
+'''
 # so we need a user registration view to incorporate this
 
 

@@ -45,5 +45,8 @@ Private vs Public Funding
 
 
 *make private leaderboard 
-*** easy
+dd*** easy
+*** make all submissions available.
+
+
 

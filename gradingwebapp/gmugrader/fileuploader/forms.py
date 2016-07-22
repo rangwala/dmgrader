@@ -3,7 +3,7 @@
 from django import forms
 from models import Solution, Article, Assignment
 from django.contrib.auth.models import User
-from models import UserProfile
+#from models import #UserProfile
 
 #tinymce editor
 #from tinymce.models import HTMLField
@@ -48,8 +48,10 @@ class UserForm (forms.ModelForm):
         model = User
         fields = ['first_name', 'last_name', 'username', 'email', 'password']
 
+'''
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         exclude = ['user']
         fields  = ['team_name']
+'''
