@@ -2,20 +2,40 @@
 {% load staticfiles %}
 {% load static %}
 {%block content %}
+
+
+
+<table>
+<th>
 <h1>{{ assignment.name}}</h1>
+</th>
+<tr>
+<td>
+<b> Published Date: </b> <br> {{assignment.pub_date}}
+</td>
+</tr>
+<td>
+<b> Deadline Date: </b>  <br> {{assignment.deadline_date}}
+</td>
+<tr>
+<td>
+<b> Description: </b> <br> {{assignment.description | safe}}
+</td>
+</tr>
+<tr>
+<td>
+<b> Files: </b> <br>
 <ul>
-<li>Published {{assignment.pub_date}}
-</li>
+<li> <i> Train Data:  </i> <a href="{{fileurls}} {{assignment.train_data}}" style="text-decoration:None"> Download File </a> </li>
+<li> <i> Test Data: </i> <a href="{{fileurls}} {{assignment.test_data}}" style="text-decoration:None"> Download File </a> </li>
+<li> <i> Format File: </i> <a href="{{fileurls}}{{assignment.format_example}}" style="text-decoration:None"> Download File </a> </li>
 
 
-<li> Description {{assignment.description | safe}}
-</li>
-
-
-<li>
-Total Uploaded Count {{assignment.uploaded_cnt}}
-</li>
 </ul>
+
+</td>
+</tr>
+</table>
 
 
 {{figplot}}

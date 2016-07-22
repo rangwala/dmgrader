@@ -405,7 +405,10 @@ def viewAssignmentsDetail (request,assignment_id):
     pngfilename =  str('test' + assignment_id + '.png')
     plt.savefig(settings.MEDIA_ROOT + pngfilename)
     args['figplot'] = pngfilename
-
+    
+    fileurls = settings.MEDIA_URL
+    print fileurls
+    args['fileurls'] = fileurls
     #plt.show ()
     return render (request, 'fileuploader/viewAssignmentsDetail.html', args)  
 
