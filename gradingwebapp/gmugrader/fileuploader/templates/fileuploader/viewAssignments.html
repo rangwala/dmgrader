@@ -15,7 +15,11 @@ Current Time: {{currenttime}}
 
 {% for a in assignments %}
     <tr>
-    <td><a href="{% url 'fileuploader:viewAssignmentsDetail' a.id %}"> {{a.name}}</a></td>
+    <td><a href="{% url 'fileuploader:viewAssignmentsDetail' a.id %}"> {{a.name}}</a>
+    {%if user.is_staff %}
+    <a href= "{% url 'fileuploader:editAssignment' a.id %}"> (EDIT) </a>
+    {% endif %}
+    </td>
     <td> {{a.deadline_date}} </td>
     <td> {{a.uploaded_cnt}} 
     </td>
