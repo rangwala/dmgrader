@@ -55,11 +55,22 @@
         {% block page_container %}
 
         {% block left_wrapper %}
-	        <div id="related-links">
+            
+         <div id="related-links">
                 <ul class="url-block">
+                      {% if user.is_staff %}
+                    <li>
+                    <a href="/admin/">Admin</a>
+                    </li>
                     <li><a href="/fileuploader/createAssignment.html">Setup New Assignment</a></li>
+                    {# <li> <a href="/fileuploader/submitAssignment.html"> Submit Assignment </a></li> #}
+                    {% endif %}
+                    {% if user.is_authenticated %}
                     <li><a href="/fileuploader/viewAssignments.html">View All Assignments</a></li>
-                    <li> <a href="/fileuploader/submitAssignment.html"> Submit Assignment </a></li>
+                    <li><a href="/fileuploader/logout/"> Logout </a></li>
+                    {% else %}
+                    <li><a href="/fileuploader/login/">Login </a></li>
+                    {% endif %}
                 </ul>
             </div>
          {% endblock %}

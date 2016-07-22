@@ -9,6 +9,7 @@ urlpatterns=[
     url(r'^login/$', views.login, name ='login'),
     url(r'^auth/$', views.auth_view, name='auth_view'),
     url(r'^logout$',views.logout_page, name='logout_page'),
+    url(r'^logout/$',views.logout_page, name='logout_page'),
     url(r'^invalid$', views.invalid_login, name='invalid_login'),
     url(r'^loggedin$', views.loggedin,name='loggedin'),
     url(r'^$',views.index, name='index'),

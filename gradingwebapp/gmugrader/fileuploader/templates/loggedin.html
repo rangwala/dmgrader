@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
+{% load staticfiles %}
+
 {% block content %}
 
-  <h2>Hi {{full_name}} you are now logged in!</h2>
+  <h2>Welcome, {{user}}!  You are now logged in!</h2>
   <p>Click <a href="logout">here</a> to logout.</p>
   
 

@@ -14,6 +14,8 @@ from django.template import RequestContext
 from django.contrib import auth
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
+
 
 from sklearn import metrics, cross_validation
 
@@ -165,16 +167,22 @@ def auth_view (request):
     username = request.POST.get('username')  
     password = request.POST.get('password')
     user     = auth.authenticate(username=username, password=password)
-    print user, username, password 
+    #print user, username, password 
     if user is not None:
         auth.login(request,user)
-        return HttpResponseRedirect('/fileuploader/loggedin')
+        args={}
+        args.update(csrf(request))
+        args['user'] = user
+        return render_to_response('loggedin.html',args)
     else:
         return HttpResponseRedirect('/fileuploader/invalid')
 
-
+@login_required
 def loggedin(request):
-    return render_to_response('loggedin.html', {'full_name': request.user.username})
+    args = {}
+    args.update (csrf (request))
+    args['user'] = request.user
+    return render_to_response('loggedin.html', args)
 
 def invalid_login(request):
     return render_to_response('invalid_login.html')
@@ -348,7 +356,7 @@ def thanksSubmissions (request):
    return render_to_response ('fileuploader/thanksSubmissions.html') 
 
 
-
+@staff_member_required
 def viewSubmissions (request):
     args = {}
     args.update (csrf (request))
@@ -356,12 +364,14 @@ def viewSubmissions (request):
     return render_to_response ('fileuploader/viewSubmissions.html', args)
 
 
+@login_required
 def viewAssignments (request):
     args = {}
     args.update(csrf(request))
     args['assignments'] = Assignment.objects.all()
     #UTC TIME args['currenttime'] = datetime.datetime.now()
     args['currenttime'] = timezone.now()
+    args['user'] = request.user
     return render_to_response('fileuploader/viewAssignments.html',args)
 
 
@@ -422,7 +432,7 @@ def viewAssignmentsDetail (request,assignment_id):
     return render (request, 'fileuploader/viewAssignmentsDetail.html', args)  
 
 
-@login_required
+@staff_member_required
 def deleteAssignment (request, assignment_id):
    if request.user.is_superuser: 
         obj2 = Solution.objects.filter (assignment = assignment_id).count()
@@ -436,7 +446,7 @@ def deleteAssignment (request, assignment_id):
         return HttpResponse(html)
 
 
-
+@staff_member_required
 def editAssignment (request,assignment_id):
     assignment  = get_object_or_404 (Assignment, pk = assignment_id)
     if request.POST:
