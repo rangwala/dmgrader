@@ -43,3 +43,7 @@ Private vs Public Funding
 *Make Registration Page Nice
 *Only Allow GMU.edu to login
 
+
+*make private leaderboard 
+*** easy
+
