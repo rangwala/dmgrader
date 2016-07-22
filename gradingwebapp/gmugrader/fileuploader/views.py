@@ -384,18 +384,27 @@ def viewPublicRankings (request, assignment_id):
             leaderboard.append(entry)
             print u
             i = i + 1
-    print leaderboard
+    leaderboard.sort(key = lambda x: x.public_score, reverse=True)
+
     args['submissions'] = leaderboard
+    
     return render (request, 'fileuploader/viewPublicRankings.html', args)  
 
+#student view of Assignments 
+#for download
+#seeing his own submissions
 
+@login_required
 def viewAssignmentsDetail (request,assignment_id):
     args = {}
     args.update (csrf (request))
     assignment  = get_object_or_404 (Assignment, pk = assignment_id)
     args['assignment'] = assignment
-    args['submissions'] = Solution.objects.filter (assignment = assignment_id).order_by('-score')
+    current_user = request.user
+    print current_user
+    args['submissions'] = Solution.objects.filter (assignment = assignment_id,user=current_user).order_by('-submission_time')
     
+    '''
     # create a plot 
     scores_so_far = Solution.objects.values_list('score').filter (assignment = assignment_id)
     #print np.array (scores_so_far) 
@@ -405,7 +414,7 @@ def viewAssignmentsDetail (request,assignment_id):
     pngfilename =  str('test' + assignment_id + '.png')
     plt.savefig(settings.MEDIA_ROOT + pngfilename)
     args['figplot'] = pngfilename
-    
+    '''
     fileurls = settings.MEDIA_URL
     print fileurls
     args['fileurls'] = fileurls
