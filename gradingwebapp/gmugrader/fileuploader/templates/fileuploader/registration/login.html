@@ -1,19 +1,49 @@
 {% extends "base.html" %}
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lM
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37
+
+
+
+
 {% block content %}
 
   {% if form.errors %}
     <p class="error">Sorry, that's not a valid username or password</p>
   {% endif %}
 
-  <form action="/fileuploader/auth/" method="post">{% csrf_token %}
-    <label for="username">User name:</label>
-    <input type="text" name="username" value="" id="username">
-    <label for="password">Password:</label>
-    <input type="password" name="password" value="" id="password">
+  <form role="form" action="/fileuploader/auth/" method="post">
+  {% csrf_token %}
+   
+     <div class="control-group">
+     <label class="control-label"  for="username">User name: </label>
+     <div class="controls">
+     <input type="text" id="username" name="username" placeholder="" class="input-xlarge">
+    </div>
+    </div>
+     <div class="control-group">
+     <label class="control-label"  for="password">Password: </label>
+     <div class="controls">
+      <input type="password" name="password" value="" id="password">
+    </div>
+    </div>
+    <div class="control-group">
+    <div class="controls">
+    <button class="btn btn-success" type="submit" value="login">login</button>
+    </div>
+    </div>
+     <div class="control-group">
+    <div class="controls">
+    <a href="../register"> New User </a>
+    </div>
+    </div>
 
-    <input type="submit" value="login" />
-    
+
   </form>
 
 {% endblock %}
