@@ -224,9 +224,11 @@ def createAssignment (request):
         return render_to_response('fileuploader/createAssignment.html',args)
 
 
-def viewErrorMessage(message):
+@login_required
+def viewErrorMessage(request,message):
     args = {}
     args['message'] = message
+    args['user'] = request.user
     return render_to_response ('fileuploader/viewErrorMessage.html', args)
 
 
@@ -247,6 +249,7 @@ def submitChosenAssignment (request,assignment_id):
                 args = {}
                 args.update (csrf (request))
                 args['message'] = htmlmessage
+                args['user']    = request.user
                 return render_to_response ('fileuploader/viewErrorMessage.html',args)
 
 
@@ -259,6 +262,7 @@ def submitChosenAssignment (request,assignment_id):
                 args = {}
                 args.update (csrf (request))
                 args['message'] = htmlmessage
+                args['user']    = request.user
                 return render_to_response ('fileuploader/viewErrorMessage.html',args)
 
             truthFile = assignment.ground_truth
@@ -287,6 +291,7 @@ def submitChosenAssignment (request,assignment_id):
                         args = {}
                         args.update (csrf (request))
                         args['message'] = htmlmessage
+                        args['user'] = request.user
                         return render_to_response ('fileuploader/viewErrorMessage.html',args)
 
                         #return HttpResponse(htmlmessage)
