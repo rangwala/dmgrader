@@ -39,3 +39,7 @@ Think of Admin View  of All Submission
 Best/User
 Private vs Public Funding 
 
+
+*Make Registration Page Nice
+*Only Allow GMU.edu to login
+
