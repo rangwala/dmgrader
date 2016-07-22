@@ -305,6 +305,7 @@ def submitChosenAssignment (request,assignment_id):
             args={}
             args.update (csrf (request))
             #create a splash page
+            args['user'] = request.user
             return render_to_response('fileuploader/thanksSubmissions.html',args)
             #return render_to_response('fileuploader/viewSubmissions.html',args)
     else:
@@ -380,6 +381,29 @@ def viewAssignments (request):
     return render_to_response('fileuploader/viewAssignments.html',args)
 
 
+@staff_member_required
+def viewPrivateRankings (request, assignment_id):
+    args = {}
+    args.update (csrf (request))
+    assignment = get_object_or_404 (Assignment, pk = assignment_id)
+    args ['assignment'] = assignment
+    subset_entries = Solution.objects.filter (assignment=assignment_id).filter(status = "OK").order_by('user','-submission_time') 
+    u = "None"
+    leaderboard = [] 
+    i = 0
+    for entry in subset_entries:
+        if entry.user != u:
+            u = entry.user
+            leaderboard.append(entry)
+            print u
+            i = i + 1
+    leaderboard.sort(key = lambda x: x.score, reverse=True)
+
+    args['submissions'] = leaderboard
+    
+    return render (request, 'fileuploader/viewPrivateRankings.html', args)  
+
+
 
 
 #student view
@@ -445,7 +469,7 @@ def deleteAssignment (request, assignment_id):
             u1 = Solution.objects.filter(assignment=assignment_id).delete()
     
         u2 = Assignment.objects.get(pk=assignment_id).delete()
-        return render_to_response ('fileuploader/thanksSubmissions.html') 
+        return render_to_response ('fileuploader/viewAssignments.html') 
    else:
         html = "<html><body>You are not authorized to permit this action</body></html>" 
         return HttpResponse(html)

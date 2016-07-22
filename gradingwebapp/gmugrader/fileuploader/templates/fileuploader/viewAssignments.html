@@ -18,6 +18,7 @@ Current Time: {{currenttime}}
     <td><a href="{% url 'fileuploader:viewAssignmentsDetail' a.id %}"> {{a.name}}</a>
     {%if user.is_staff %}
     <a href= "{% url 'fileuploader:editAssignment' a.id %}"> (EDIT) </a>
+    <a href= "{% url 'fileuploader:deleteAssignment' a.id %}"> (DELETE) </a>
     {% endif %}
     </td>
     <td> {{a.deadline_date}} </td>
@@ -27,7 +28,14 @@ Current Time: {{currenttime}}
     <a href="{% url 'fileuploader:submitChosenAssignment' a.id %}"> Submit </a> </td>
     </td>
     <td>
-    <a href="{% url 'fileuploader:viewPublicRankings' a.id %}"> Leaderboard  </a> </td>
+    <a href="{% url 'fileuploader:viewPublicRankings' a.id %}"> Leaderboard  </a> 
+    {%if user.is_staff %}
+        <a href= "{% url 'fileuploader:viewPrivateRankings' a.id %}"> (Private) </a>
+    {% endif %}
+    </td>
+
+    
+    
     </td>
     </tr>
 
