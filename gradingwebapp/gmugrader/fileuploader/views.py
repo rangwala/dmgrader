@@ -433,6 +433,30 @@ def viewPublicRankings (request, assignment_id):
 #for download
 #seeing his own submissions
 
+@staff_member_required
+def viewSubmissionLogs (request, assignment_id):
+    args = {}
+    args.update (csrf (request))
+    assignment = get_object_or_404 (Assignment, pk = assignment_id)
+    args ['assignment'] = assignment
+    
+    args['user'] = request.user
+
+    args['submissions'] = Solution.objects.filter (assignment = assignment_id,status='OK').order_by('submission_time')
+     
+    scores_so_far = Solution.objects.values_list('score').filter (assignment = assignment_id,status='OK').order_by('submission_time')
+    pub_scores_so_far = Solution.objects.values_list('public_score').filter (assignment = assignment_id,status='OK').order_by('submission_time')
+    #print np.array (scores_so_far) 
+    plt.plot (np.array(scores_so_far), 'ro')
+    plt.plot (np.array(pub_scores_so_far), 'b*')
+    pngfilename =  str('test' + assignment_id + '.png')
+    plt.savefig(settings.MEDIA_ROOT + pngfilename)
+    args['figplot'] = pngfilename
+
+    
+    return render (request, 'fileuploader/viewSubmissionLogs.html', args)  
+
+
 @login_required
 def viewAssignmentsDetail (request,assignment_id):
     args = {}

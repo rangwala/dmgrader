@@ -24,6 +24,7 @@ urlpatterns=[
     url(r'^\/viewAssignments.html$', views.viewAssignments, name='viewAssignments'),
     url(r'^viewAssignments.html$', views.viewAssignments, name='viewAssignments'),
     url(r'^viewErrorMessage.html$', views.viewErrorMessage, name='viewErrorMessage'),
+    url(r'^viewSubmissionLogs\/(?P<assignment_id>.*)\/$', views.viewSubmissionLogs, name='viewSubmissionLogs'),
     url(r'^viewPrivateRankings\/(?P<assignment_id>.*)\/$', views.viewPrivateRankings, name='viewPrivateRankings'),
     url(r'^viewPublicRankings\/(?P<assignment_id>.*)\/$', views.viewPublicRankings, name='viewPublicRankings'),
     url(r'^viewAssignmentsDetail\/(?P<assignment_id>.*)\/$', views.viewAssignmentsDetail, name='viewAssignmentsDetail'),

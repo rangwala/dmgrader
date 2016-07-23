@@ -31,6 +31,7 @@ Current Time: {{currenttime}}
     <a href="{% url 'fileuploader:viewPublicRankings' a.id %}"> Leaderboard  </a> 
     {%if user.is_staff %}
         <a href= "{% url 'fileuploader:viewPrivateRankings' a.id %}"> (Private) </a>
+        <a href= "{% url 'fileuploader:viewSubmissionLogs' a.id %}"> (Logs) </a>
     {% endif %}
     </td>
 
