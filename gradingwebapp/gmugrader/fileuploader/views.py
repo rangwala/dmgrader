@@ -210,6 +210,8 @@ def computescores (request):
     
 # this is only allowable by the ADMIN/INSTRUCTOR 
 
+
+@staff_member_required
 def createAssignment (request):
     if request.POST:
         form = AssignmentForm (request.POST, request.FILES)
