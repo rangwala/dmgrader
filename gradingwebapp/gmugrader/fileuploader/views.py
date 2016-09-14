@@ -52,7 +52,17 @@ def computeSampledMetrics (predfile, solfile,samplesize):
         sample_predictions  = predictions [test_index]
         print np.mean (sample_ground == sample_predictions)    
         print metrics.classification_report (sample_ground, sample_predictions)
-    return metrics.accuracy_score (sample_ground, sample_predictions)
+    #return metrics.f1_score (sample_ground,sample_predictions, pos_label=1)
+    
+        ytrue = np.array(sample_ground,dtype=np.int)
+        ypred = np.array(sample_predictions,dtype=np.int)
+
+    return metrics.f1_score(ytrue,ypred,pos_label=1)
+    
+
+
+    
+   # return metrics.accuracy_score(sample_ground, sample_predictions) 
     
 
 
@@ -86,7 +96,11 @@ def computeMetrics (predfile, solfile):
     else:
         print np.mean (ground == predictions)    
         print metrics.classification_report (ground, predictions)
-        return metrics.accuracy_score (ground,  predictions)
+       
+        ytrue = np.array(ground,dtype=np.int)
+        ypred = np.array(predictions,dtype=np.int)
+
+        return metrics.f1_score(ytrue, ypred,pos_label=1)
     
 
 
