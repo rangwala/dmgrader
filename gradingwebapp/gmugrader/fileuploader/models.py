@@ -44,6 +44,15 @@ class Assignment (models.Model):
     sampling_private=models.IntegerField (default=50) 
     #best_score      = models.DecimalField (max_digits=5, decimal_places=2, default = Decimal (-1.0))
     num_subs_per_day = models.IntegerField (default=5)
+    ACCURACY = 'AC'
+    F1SCORE  = 'F1'
+    OTHER    = 'OT'
+    SCORING_CHOICES = (
+        (ACCURACY, 'Accuracy'),
+        (F1SCORE, 'F1-Score'),
+        (OTHER, 'Other'),
+    )
+    scoring_method = models.CharField (max_length=2, choices=SCORING_CHOICES, default=ACCURACY)
     
     def __unicode__(self):
         return self.name

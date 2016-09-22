@@ -27,7 +27,7 @@ class AssignmentForm(forms.ModelForm):
     #samping_private=forms.IntegerField(label='1-100')
     class Meta:
         model = Assignment
-        fields = ('name','description','ground_truth','deadline_date','test_data','train_data','format_example','sampling_private')
+        fields = ('name','description','ground_truth','deadline_date','test_data','train_data','format_example','scoring_method','sampling_private')
 
 class submissionAssignmentForm (forms.ModelForm):
     class Meta:

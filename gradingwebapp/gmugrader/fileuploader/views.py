@@ -32,7 +32,7 @@ from datetime import datetime, timedelta
 
 from django.db.models import Max, Min
 
-def computeSampledMetrics (predfile, solfile,samplesize):
+def computeSampledMetrics (predfile, solfile,samplesize,scoring_method):
     myPredFile = open (settings.MEDIA_ROOT + str(predfile), 'r')
     #myPredFile = open (settings.MEDIA_ROOT +  '/solution_files/sol.txt', 'r')
     myTrueFile = open (settings.MEDIA_ROOT + str(solfile), 'r')
@@ -57,8 +57,10 @@ def computeSampledMetrics (predfile, solfile,samplesize):
         ytrue = np.array(sample_ground,dtype=np.int)
         ypred = np.array(sample_predictions,dtype=np.int)
 
-    return metrics.f1_score(ytrue,ypred,pos_label=1)
-    
+    if scoring_method == 'F1': 
+        return metrics.f1_score(ytrue,ypred,pos_label=1)
+    if scoring_method == 'AC':
+        return metrics.accuracy_score(ytrue, ypred) 
 
 
     
@@ -80,7 +82,7 @@ def computeSampledMetrics (predfile, solfile,samplesize):
 """
 
 
-def computeMetrics (predfile, solfile):
+def computeMetrics (predfile, solfile, scoring_method):
     myPredFile = open (settings.MEDIA_ROOT + str(predfile), 'r')
     #myPredFile = open (settings.MEDIA_ROOT +  '/solution_files/sol.txt', 'r')
     myTrueFile = open (settings.MEDIA_ROOT + str(solfile), 'r')
@@ -99,8 +101,13 @@ def computeMetrics (predfile, solfile):
        
         ytrue = np.array(ground,dtype=np.int)
         ypred = np.array(predictions,dtype=np.int)
+        
+        if scoring_method == 'F1': 
+            return metrics.f1_score(ytrue,ypred,pos_label=1)
+        if scoring_method == 'AC':
+            return metrics.accuracy_score(ytrue, ypred) 
 
-        return metrics.f1_score(ytrue, ypred,pos_label=1)
+
     
 
 
@@ -289,6 +296,7 @@ def submitChosenAssignment (request,assignment_id):
             # also update the score
             obj1 = Assignment.objects.get(pk = a.assignment_id) #.update(uploaded_cnt = uploaded_cnt + 1)
             truthFile = obj1.ground_truth
+            scorer = obj1.scoring_method
             obj1.uploaded_cnt = obj1.uploaded_cnt + 1
             counter = obj1.uploaded_cnt
             obj1.save() 
@@ -300,7 +308,7 @@ def submitChosenAssignment (request,assignment_id):
             for items in obj2:
                 if items.solution_file == a.solution_file:
                     items.attempt = counter
-                    items.score =       computeMetrics (items.solution_file, truthFile)
+                    items.score =       computeMetrics (items.solution_file, truthFile,scorer)
                     flag_save = 1
                     if items.score == -100:
                         htmlmessage = "Your Prediction File has incorrect number of entries"
@@ -315,7 +323,7 @@ def submitChosenAssignment (request,assignment_id):
                         items.submission_time = timezone.now()
                         items.status = 'OK'
                         #Compute the Public_SCORE
-                        items.public_score = computeSampledMetrics (items.solution_file, truthFile, obj1.sampling_private) 
+                        items.public_score = computeSampledMetrics (items.solution_file, truthFile, obj1.sampling_private,scorer) 
                         items.save()
             
             args={}
@@ -338,41 +346,41 @@ def submitChosenAssignment (request,assignment_id):
 
 
 
-@login_required
-def submitAssignment (request):
-    if request.POST:
-        form = submissionForm(request.POST, request.FILES)
-        if form.is_valid():
-            a = form.save(commit=False)
-            a.user = request.user
-            print a.user
-            a.save()
+#@login_required
+#def submitAssignment (request):
+#    if request.POST:
+#        form = submissionForm(request.POST, request.FILES)
+#        if form.is_valid():
+#            a = form.save(commit=False)
+#            a.user = request.user
+#            print a.user
+#            a.save()
             # update the counter
             # also update the score
-            obj1 = Assignment.objects.filter(name = a.assignment) #.update(uploaded_cnt = uploaded_cnt + 1)
-            for items in obj1:
-                items.uploaded_cnt = items.uploaded_cnt + 1
-                counter = items.uploaded_cnt
-                truthFile = items.ground_truth
-                items.save()
+#            obj1 = Assignment.objects.filter(name = a.assignment) #.update(uploaded_cnt = uploaded_cnt + 1)
+#            for items in obj1:
+#                items.uploaded_cnt = items.uploaded_cnt + 1
+#                counter = items.uploaded_cnt
+#                truthFile = items.ground_truth
+#                items.save()
             # gets all the files back... 
             # we need a table of student - attempts - etc
 
-            obj2 = Solution.objects.filter (assignment = a.assignment)
+#            obj2 = Solution.objects.filter (assignment = a.assignment)
 
-            for items in obj2:
-                if items.solution_file == a.solution_file:
-                    items.attempt = counter
-                    items.score = computeMetrics (items.solution_file, truthFile)
-                    items.save()
-            return HttpResponseRedirect('viewSubmissions.html')
-    else:
-        form = submissionForm()
-        args = {}
-        args.update(csrf (request))
-        args['form'] = form
-        return render_to_response('fileuploader/submitAssignment.html',args)
-
+#            for items in obj2:
+#                if items.solution_file == a.solution_file:
+#                    items.attempt = counter
+#                    items.score = computeMetrics (items.solution_file, truthFile)
+#                    items.save()
+#            return HttpResponseRedirect('viewSubmissions.html')
+#    else:
+#        form = submissionForm()
+#        args = {}
+#        args.update(csrf (request))
+#        args['form'] = form
+#        return render_to_response('fileuploader/submitAssignment.html',args)
+#'''
 
 def thanksSubmissions (request):
    return render_to_response ('fileuploader/thanksSubmissions.html') 
