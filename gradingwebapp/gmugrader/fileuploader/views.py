@@ -61,7 +61,8 @@ def computeSampledMetrics (predfile, solfile,samplesize,scoring_method):
         return metrics.f1_score(ytrue,ypred,pos_label=1)
     if scoring_method == 'AC':
         return metrics.accuracy_score(ytrue, ypred) 
-
+    if scoring_method == 'V1':
+        return metrics.v_measure_score(ytrue, ypred)
 
     
    # return metrics.accuracy_score(sample_ground, sample_predictions) 
@@ -106,6 +107,9 @@ def computeMetrics (predfile, solfile, scoring_method):
             return metrics.f1_score(ytrue,ypred,pos_label=1)
         if scoring_method == 'AC':
             return metrics.accuracy_score(ytrue, ypred) 
+        if scoring_method == 'V1':
+            return metrics.v_measure_score(ytrue, ypred)
+
 
 
     

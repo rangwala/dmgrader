@@ -46,10 +46,12 @@ class Assignment (models.Model):
     num_subs_per_day = models.IntegerField (default=5)
     ACCURACY = 'AC'
     F1SCORE  = 'F1'
+    VMEASURE = 'V1'
     OTHER    = 'OT'
     SCORING_CHOICES = (
         (ACCURACY, 'Accuracy'),
         (F1SCORE, 'F1-Score'),
+        (VMEASURE, 'V-measure')
         (OTHER, 'Other'),
     )
     scoring_method = models.CharField (max_length=2, choices=SCORING_CHOICES, default=ACCURACY)
