@@ -48,10 +48,12 @@ class Assignment (models.Model):
     F1SCORE  = 'F1'
     VMEASURE = 'V1'
     OTHER    = 'OT'
+    RMSE     = 'RE'
     SCORING_CHOICES = (
         (ACCURACY, 'Accuracy'),
         (F1SCORE, 'F1-Score'),
         (VMEASURE, 'V-measure'),
+        (RMSE, 'rmse'),
         (OTHER, 'Other'),
     )
     scoring_method = models.CharField (max_length=2, choices=SCORING_CHOICES, default=ACCURACY)

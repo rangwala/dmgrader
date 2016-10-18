@@ -53,9 +53,12 @@ def computeSampledMetrics (predfile, solfile,samplesize,scoring_method):
         print np.mean (sample_ground == sample_predictions)    
         print metrics.classification_report (sample_ground, sample_predictions)
     #return metrics.f1_score (sample_ground,sample_predictions, pos_label=1)
-    
-        ytrue = np.array(sample_ground,dtype=np.int)
-        ypred = np.array(sample_predictions,dtype=np.int)
+        if scoring_method == 'RE':
+            ytrue = np.array (sample_ground, dtype=np.float)
+            ypred = np.array (sample_predictions, dtype=np.float)
+        else:
+            ytrue = np.array(sample_ground,dtype=np.int)
+            ypred = np.array(sample_predictions,dtype=np.int)
 
     if scoring_method == 'F1': 
         return metrics.f1_score(ytrue,ypred,pos_label=1)
@@ -63,7 +66,8 @@ def computeSampledMetrics (predfile, solfile,samplesize,scoring_method):
         return metrics.accuracy_score(ytrue, ypred) 
     if scoring_method == 'V1':
         return metrics.v_measure_score(ytrue, ypred)
-
+    if scoring_method == 'RE':
+        return 1.0 - metrics.mean_squared_error (ytrue, ypred)
     
    # return metrics.accuracy_score(sample_ground, sample_predictions) 
     
@@ -99,9 +103,13 @@ def computeMetrics (predfile, solfile, scoring_method):
     else:
         print np.mean (ground == predictions)    
         print metrics.classification_report (ground, predictions)
-       
-        ytrue = np.array(ground,dtype=np.int)
-        ypred = np.array(predictions,dtype=np.int)
+      
+        if scoring_method == 'RE':
+            ytrue = np.array (ground, dtype=np.float)
+            ypred = np.array (predictions, dtype=np.float)
+        else:
+            ytrue = np.array(ground,dtype=np.int)
+            ypred = np.array(predictions,dtype=np.int)
         
         if scoring_method == 'F1': 
             return metrics.f1_score(ytrue,ypred,pos_label=1)
@@ -109,6 +117,8 @@ def computeMetrics (predfile, solfile, scoring_method):
             return metrics.accuracy_score(ytrue, ypred) 
         if scoring_method == 'V1':
             return metrics.v_measure_score(ytrue, ypred)
+        if scoring_method == 'RE':
+            return 1.0 - metrics.mean_squared_error (ytrue, ypred)
 
 
 
