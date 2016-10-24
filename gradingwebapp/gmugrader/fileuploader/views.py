@@ -67,7 +67,7 @@ def computeSampledMetrics (predfile, solfile,samplesize,scoring_method):
     if scoring_method == 'V1':
         return metrics.v_measure_score(ytrue, ypred)
     if scoring_method == 'RE':
-        return 1.0 - metrics.mean_squared_error (ytrue, ypred)
+        return  metrics.mean_squared_error (ytrue, ypred) ** 0.5
     
    # return metrics.accuracy_score(sample_ground, sample_predictions) 
     
@@ -118,7 +118,7 @@ def computeMetrics (predfile, solfile, scoring_method):
         if scoring_method == 'V1':
             return metrics.v_measure_score(ytrue, ypred)
         if scoring_method == 'RE':
-            return 1.0 - metrics.mean_squared_error (ytrue, ypred)
+            return 1.0 - metrics.mean_squared_error (ytrue, ypred) ** 0.5
 
 
 
