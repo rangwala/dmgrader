@@ -118,7 +118,7 @@ def computeMetrics (predfile, solfile, scoring_method):
         if scoring_method == 'V1':
             return metrics.v_measure_score(ytrue, ypred)
         if scoring_method == 'RE':
-            return 1.0 - metrics.mean_squared_error (ytrue, ypred) ** 0.5
+            return  metrics.mean_squared_error (ytrue, ypred) ** 0.5
 
 
 
@@ -435,7 +435,10 @@ def viewPrivateRankings (request, assignment_id):
             leaderboard.append(entry)
             print u
             i = i + 1
-    leaderboard.sort(key = lambda x: x.score, reverse=True)
+    if assignment.scoring_method == 'RE':        
+        leaderboard.sort(key = lambda x: x.score)
+    else:
+        leaderboard.sort(key = lambda x: x.score, reverse=True)
 
     args['submissions'] = leaderboard
     
@@ -461,8 +464,10 @@ def viewPublicRankings (request, assignment_id):
             leaderboard.append(entry)
             print u
             i = i + 1
-    leaderboard.sort(key = lambda x: x.public_score, reverse=True)
-
+    if assignment.scoring_method == 'RE':        
+        leaderboard.sort(key = lambda x: x.public_score)
+    else:
+        leaderboard.sort(key = lambda x: x.public_score, reverse=True)
     args['submissions'] = leaderboard
     
     return render (request, 'fileuploader/viewPublicRankings.html', args)  
