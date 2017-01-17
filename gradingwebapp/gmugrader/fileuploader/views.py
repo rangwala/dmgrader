@@ -7,7 +7,7 @@ from django.core.context_processors import csrf
 
 from django.conf import settings
 
-from forms import submissionAssignmentForm, submissionForm, AssignmentForm, ArticleForm, UserForm # UserProfileForm
+from .forms import submissionAssignmentForm, submissionForm, AssignmentForm, ArticleForm, UserForm # UserProfileForm
 from .models import Article, Assignment, Solution 
 
 from django.template import RequestContext
@@ -50,9 +50,9 @@ def computeSampledMetrics (predfile, solfile,samplesize,scoring_method):
     for train_index, test_index in rs:
         sample_ground       = ground [test_index]
         sample_predictions  = predictions [test_index]
-        print np.mean (sample_ground == sample_predictions)    
-        print metrics.classification_report (sample_ground, sample_predictions)
-    #return metrics.f1_score (sample_ground,sample_predictions, pos_label=1)
+        #print np.mean (sample_ground == sample_predictions)    
+        #print metrics.classification_report (sample_ground, sample_predictions)
+        #return metrics.f1_score (sample_ground,sample_predictions, pos_label=1)
         if scoring_method == 'RE':
             ytrue = np.array (sample_ground, dtype=np.float)
             ypred = np.array (sample_predictions, dtype=np.float)
@@ -101,8 +101,8 @@ def computeMetrics (predfile, solfile, scoring_method):
     if len(predictions) != len(ground):
         return -100.0
     else:
-        print np.mean (ground == predictions)    
-        print metrics.classification_report (ground, predictions)
+        #print np.mean (ground == predictions)    
+        #print metrics.classification_report (ground, predictions)
       
         if scoring_method == 'RE':
             ytrue = np.array (ground, dtype=np.float)
@@ -156,7 +156,7 @@ def get_accuracy_value (filename):
     for i in range (len(ground)):
         if (ground[i] == predictions[i]):
             corr = corr+1;
-            print corr
+            #print corr
     myPredFile.close()
     myTrueFile.close()
 
@@ -279,7 +279,7 @@ def submitChosenAssignment (request,assignment_id):
         if form.is_valid():
             a = form.save(commit=False)
             a.user = request.user
-            print a.user
+            #print a.user
             assignment  = get_object_or_404 (Assignment, pk = assignment_id)
             if timezone.now() > assignment.deadline_date:
                 htmlmessage = "Past Deadline Date"
@@ -318,7 +318,7 @@ def submitChosenAssignment (request,assignment_id):
             # we need a table of student - attempts - etc
 
             obj2 = Solution.objects.filter (assignment = a.assignment)
-            print len(obj2)
+            #print len(obj2)
             for items in obj2:
                 if items.solution_file == a.solution_file:
                     items.attempt = counter
@@ -412,7 +412,11 @@ def viewSubmissions (request):
 def viewAssignments (request):
     args = {}
     args.update(csrf(request))
-    args['assignments'] = Assignment.objects.all()
+    if request.user.is_superuser: 
+        args['assignments'] = Assignment.objects.all()
+    else:
+        args['assignments'] = Assignment.objects.all().filter(hidden_status = 0)
+
     #UTC TIME args['currenttime'] = datetime.datetime.now()
     args['currenttime'] = timezone.now()
     args['user'] = request.user
@@ -433,7 +437,6 @@ def viewPrivateRankings (request, assignment_id):
         if entry.user != u:
             u = entry.user
             leaderboard.append(entry)
-            print u
             i = i + 1
     if assignment.scoring_method == 'RE':        
         leaderboard.sort(key = lambda x: x.score)
@@ -462,7 +465,6 @@ def viewPublicRankings (request, assignment_id):
         if entry.user != u:
             u = entry.user
             leaderboard.append(entry)
-            print u
             i = i + 1
     if assignment.scoring_method == 'RE':        
         leaderboard.sort(key = lambda x: x.public_score)
@@ -507,7 +509,6 @@ def viewAssignmentsDetail (request,assignment_id):
     assignment  = get_object_or_404 (Assignment, pk = assignment_id)
     args['assignment'] = assignment
     current_user = request.user
-    print current_user
     args['submissions'] = Solution.objects.filter (assignment = assignment_id,user=current_user).order_by('-submission_time')
     
     '''
@@ -522,7 +523,6 @@ def viewAssignmentsDetail (request,assignment_id):
     args['figplot'] = pngfilename
     '''
     fileurls = settings.MEDIA_URL
-    print fileurls
     args['fileurls'] = fileurls
     #plt.show ()
     return render (request, 'fileuploader/viewAssignmentsDetail.html', args)  
@@ -546,11 +546,9 @@ def deleteAssignment (request, assignment_id):
 def editAssignment (request,assignment_id):
     assignment  = get_object_or_404 (Assignment, pk = assignment_id)
     if request.POST:
-        print "I am here"
         form = AssignmentForm(request.POST, request.FILES, instance=assignment)
         if form.is_valid():
             a = form.save()
-            print "Form is valid"
             #viewAssignmentsDetail (request, assignment_id)
             return HttpResponseRedirect('../../viewAssignments.html')
 

@@ -42,7 +42,8 @@ class Assignment (models.Model):
     test_data       = models.FileField(upload_to=get_upload_file_name) 
     format_example  = models.FileField(upload_to=get_upload_file_name) 
     sampling_private=models.IntegerField (default=50) 
-    #best_score      = models.DecimalField (max_digits=5, decimal_places=2, default = Decimal (-1.0))
+    hidden_status   = models.IntegerField(default=1)    
+#best_score      = models.DecimalField (max_digits=5, decimal_places=2, default = Decimal (-1.0))
     num_subs_per_day = models.IntegerField (default=5)
     ACCURACY = 'AC'
     F1SCORE  = 'F1'
