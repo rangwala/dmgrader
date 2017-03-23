@@ -53,7 +53,7 @@ def computeSampledMetrics (predfile, solfile,samplesize,scoring_method):
         #print np.mean (sample_ground == sample_predictions)    
         #print metrics.classification_report (sample_ground, sample_predictions)
         #return metrics.f1_score (sample_ground,sample_predictions, pos_label=1)
-        if scoring_method == 'RE':
+        if scoring_method == ('RE' or 'RC'):
             ytrue = np.array (sample_ground, dtype=np.float)
             ypred = np.array (sample_predictions, dtype=np.float)
         else:
@@ -68,6 +68,9 @@ def computeSampledMetrics (predfile, solfile,samplesize,scoring_method):
         return metrics.v_measure_score(ytrue, ypred)
     if scoring_method == 'RE':
         return  metrics.mean_squared_error (ytrue, ypred) ** 0.5
+    if scoring_method == 'RC':
+        ytrue = np.array(sample_ground,dtype=np.int)
+        return metrics.roc_auc_score (ytrue, ypred)
     
    # return metrics.accuracy_score(sample_ground, sample_predictions) 
     
@@ -104,7 +107,7 @@ def computeMetrics (predfile, solfile, scoring_method):
         #print np.mean (ground == predictions)    
         #print metrics.classification_report (ground, predictions)
       
-        if scoring_method == 'RE':
+        if scoring_method == ('RE' or 'RC'):
             ytrue = np.array (ground, dtype=np.float)
             ypred = np.array (predictions, dtype=np.float)
         else:
@@ -119,7 +122,9 @@ def computeMetrics (predfile, solfile, scoring_method):
             return metrics.v_measure_score(ytrue, ypred)
         if scoring_method == 'RE':
             return  metrics.mean_squared_error (ytrue, ypred) ** 0.5
-
+        if scoring_method == 'RC':
+            ytrue = np.array(ground,dtype=np.int)
+            return metrics.roc_auc_score (ytrue, ypred)
 
 
     
