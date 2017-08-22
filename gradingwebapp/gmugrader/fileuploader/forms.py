@@ -1,8 +1,7 @@
 
 from django import forms
-from .models import Solution, Article, Assignment
-from django.contrib.auth.models import User
-#from models import #UserProfile
+from .models import Class,Solution, Article, Assignment
+from django.contrib.auth.models import User 
 
 #tinymce editor
 #from tinymce.models import HTMLField
@@ -26,7 +25,8 @@ class AssignmentForm(forms.ModelForm):
     #samping_private=forms.IntegerField(label='1-100')
     class Meta:
         model = Assignment
-        fields = ('name','description','ground_truth','deadline_date','test_data','train_data','format_example','num_subs_per_day','hidden_status','scoring_method','sampling_private')
+        fields = ('name','description','ground_truth','deadline_date','test_data','train_data','format_example','num_subs_per_day','hidden_status','scoring_method','sampling_private',
+        'class_name')
 
 class submissionAssignmentForm (forms.ModelForm):
     class Meta:
@@ -47,10 +47,16 @@ class UserForm (forms.ModelForm):
         model = User
         fields = ['first_name', 'last_name', 'username', 'email', 'password']
 
+class ClassForm (forms.ModelForm):
+    class Meta:
+        model = Class
+        fields = ['classnum']
+
+
 '''
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         exclude = ['user']
-        fields  = ['team_name']
+        fields  = ['class_name']
 '''

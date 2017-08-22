@@ -7,8 +7,8 @@ from django.core.context_processors import csrf
 
 from django.conf import settings
 
-from .forms import submissionAssignmentForm, submissionForm, AssignmentForm, ArticleForm, UserForm # UserProfileForm
-from .models import Article, Assignment, Solution 
+from .forms import submissionAssignmentForm, submissionForm, AssignmentForm, ArticleForm, UserForm, ClassForm # UserProfileForm
+from .models import Article, Assignment, Solution,  Class
 
 from django.template import RequestContext
 from django.contrib import auth
@@ -416,15 +416,53 @@ def viewSubmissions (request):
     args['solutions'] = Solution.objects.all ()
     return render_to_response ('fileuploader/viewSubmissions.html', args)
 
+@login_required 
+def selectClass (request):
+    if request.POST:
+        form = ClassForm (request.POST)
+        if form.is_valid():
+            a = form.save(commit=False)
+            a.user = request.user
+            a.save()
+            return HttpResponseRedirect('viewAssignments.html')
+    else:
+        form = ClassForm()
+        args = {}
+        args.update(csrf(request))
+        args['form'] = form
+        return render_to_response('fileuploader/selectClass.html',args)
+
+
+    
+
 
 @login_required
 def viewAssignments (request):
     args = {}
     args.update(csrf(request))
+    current_user = request.user
+    sc=Class.objects.filter(user=current_user)
+    if sc.count() == 1:
+        section = Class.objects.get(user=current_user)
+    else:
+        if sc.count () == 0:
+            return HttpResponseRedirect('/fileuploader/selectClass.html')
+            #return render_to_response('fileuploader/selectClass.html',args)
+        else:
+            htmlmessage = "Class Chosen Already - Contact Instructor or Create a New User Account"
+            args = {}
+            args.update (csrf (request))
+            args['message'] = htmlmessage
+            args['user']    = request.user
+            return render_to_response ('fileuploader/viewErrorMessage.html',args)
+
+
+       
+
     if request.user.is_superuser: 
         args['assignments'] = Assignment.objects.all()
     else:
-        args['assignments'] = Assignment.objects.all().filter(hidden_status = 0)
+        args['assignments'] = Assignment.objects.all().filter(hidden_status = 0,class_name=section.classnum)
 
     #UTC TIME args['currenttime'] = datetime.datetime.now()
     args['currenttime'] = timezone.now()
@@ -588,19 +626,13 @@ def create(request):
 def register(request):
     if request.POST:
         uf = UserForm(request.POST, prefix='user')
-        #upf= UserProfileForm(request.POST, prefix='userprofile')
-        if uf.is_valid():
-            user = uf.save()
-            user.set_password(user.password)    
-            user.save()
-
-            #userprofile = upf.save(commit=False)
-            #userprofile.user=user
-            #userprofile.save()
-            return HttpResponseRedirect('/fileuploader/login')
+        if uf.is_valid(): 
+            cuser = uf.save()
+            cuser.set_password(cuser.password)    
+            cuser.save()
+            return HttpResponseRedirect('/fileuploader/selectClass.html')
     else:
         uf = UserForm(prefix='user')
-        #upf= UserProfileForm(prefix='userprofile')
     
     #return render_to_response('register.html', dict(userform=uf,userprofileform=upf), context_instance=RequestContext(request))
     return render_to_response('register.html', dict(userform=uf), context_instance=RequestContext(request))

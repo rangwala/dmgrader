@@ -16,8 +16,10 @@
     <form role="form" method="post" action="register">
     <h2>Registration Form</h2>
     {% csrf_token %}
+    
     <div class="control-group">
     {{userform}}
+    {{userprofileform}}
     </div>
     <button class="btn btn-primary" type="submit"> Register </button>
     

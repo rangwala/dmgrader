@@ -60,9 +60,15 @@ class Assignment (models.Model):
         (OTHER, 'Other'),
     )
     scoring_method = models.CharField (max_length=2, choices=SCORING_CHOICES, default=ACCURACY)
-    
+    class_name= models.IntegerField(default=0)
+
     def __unicode__(self):
         return self.name
+
+
+class Class (models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    classnum = models.IntegerField (default=0, choices=[0,484,584])
 
 
 class Solution (models.Model):
@@ -84,9 +90,8 @@ class Solution (models.Model):
 
 '''
 class UserProfile (models.Model):
-    user         = models.OneToOneField (User, on_delete=models.CASCADE)
-    tot_attempts = models.IntegerField (default=0)
-    team_name    = models.CharField (max_length=200)
+    user         = models.OneToOneField (User, on_delete=models.CASCADE, related_name='profile')
+    class_name   = models.IntegerField(default=0)
 '''
 # so we need a user registration view to incorporate this
 
