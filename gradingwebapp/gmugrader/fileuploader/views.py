@@ -17,7 +17,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 
 
-from sklearn import metrics, cross_validation
+from sklearn import metrics
+from sklearn.model_selection import cross_val_score
 
 import numpy as np
 
