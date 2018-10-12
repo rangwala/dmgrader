@@ -6,10 +6,10 @@ from . import views
 
 app_name='fileuploader'
 urlpatterns=[
-    url(r'^login/$', views.login, name ='login'),
-    url(r'^auth/$', views.auth_view, name='auth_view'),
+    url(r'^login/?$', views.login, name ='login'),
+    url(r'^auth/?$', views.auth_view, name='auth_view'),
     url(r'^logout$',views.logout_page, name='logout_page'),
-    url(r'^logout/$',views.logout_page, name='logout_page'),
+    url(r'^logout/?$',views.logout_page, name='logout_page'),
     url(r'^invalid$', views.invalid_login, name='invalid_login'),
     url(r'^loggedin$', views.loggedin,name='loggedin'),
     url(r'^$',views.index, name='index'),
@@ -26,17 +26,17 @@ urlpatterns=[
     url(r'^\/viewAssignments.html$', views.viewAssignments, name='viewAssignments'),
     url(r'^viewAssignments.html$', views.viewAssignments, name='viewAssignments'),
     url(r'^viewErrorMessage.html$', views.viewErrorMessage, name='viewErrorMessage'),
-    url(r'^viewSubmissionLogs\/(?P<assignment_id>.*)\/$', views.viewSubmissionLogs, name='viewSubmissionLogs'),
-    url(r'^viewPrivateRankings\/(?P<assignment_id>.*)\/$', views.viewPrivateRankings, name='viewPrivateRankings'),
-    url(r'^viewPublicRankings\/(?P<assignment_id>.*)\/$', views.viewPublicRankings, name='viewPublicRankings'),
-    url(r'^viewAssignmentsDetail\/(?P<assignment_id>.*)\/$', views.viewAssignmentsDetail, name='viewAssignmentsDetail'),
+    url(r'^viewSubmissionLogs\/(?P<assignment_id>.*)\/?$', views.viewSubmissionLogs, name='viewSubmissionLogs'),
+    url(r'^viewPrivateRankings\/(?P<assignment_id>.*)\/?$', views.viewPrivateRankings, name='viewPrivateRankings'),
+    url(r'^viewPublicRankings\/(?P<assignment_id>.*)\/?$', views.viewPublicRankings, name='viewPublicRankings'),
+    url(r'^viewAssignmentsDetail\/(?P<assignment_id>.*)\/?$', views.viewAssignmentsDetail, name='viewAssignmentsDetail'),
     url(r'^viewAssignmentsDetail\/(?P<assignment_id>.*)\/edit$', views.editAssignment, name='editAssignment'),
     url(r'^viewAssignmentsDetail\/(?P<assignment_id>.*)\/delete$', views.deleteAssignment, name='deleteAssignment'),
-    url(r'^submitChosenAssignment\/(?P<assignment_id>.*)\/$', views.submitChosenAssignment, name='submitChosenAssignment'),
+    url(r'^submitChosenAssignment\/(?P<assignment_id>.*)\/?$', views.submitChosenAssignment, name='submitChosenAssignment'),
     #url(r'^submitAssignment.html$', views.submitAssignment, name='submitAssignment'),
     #url(r'^submitAssignment$', views.submitAssignment, name='submitAssignment'),
     url(r'^viewSubmissions.html$', views.viewSubmissions, name='viewSubmissions'),
     url(r'^viewSubmissions$', views.viewSubmissions, name='viewSubmissions'),
     url(r'^thanksSubmissions.html$', views.thanksSubmissions, name='thanksSubmissions'),
     url(r'^thanksSubmissions$', views.thanksSubmissions, name='thanksSubmissions'),
-]   
+]
