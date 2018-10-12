@@ -1,2 +1,3 @@
 /dmgrader
 /*.pyc
+__pycache__/
