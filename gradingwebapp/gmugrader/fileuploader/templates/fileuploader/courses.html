@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+	<div>
+		
+		<h2>My Courses</h2>
+			<br>
+			<table class="table mytable" style="width: 100%">
+				<thead>
+					<tr>
+						<th>Course Name</th>
+						<th>Course Code</th>
+						<th>Section</th>
+						<th>Semester</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for c in courses %}
+						<tr>
+							<td><a href="{% url 'fileuploader:editCourse' c.id%}">{{ c.full_name }}</a></td>
+							<td>{{ c.classnum }}</td>
+							<td>{{ c.section }}</td>
+							<td>{{ c.semester }} {{ c.year }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<br>
+			<div class="row">
+				<div class="col-sm-12 text-right"><a href="{% url 'fileuploader:newcourse' %}" class="btn btn-success">Create a Course</a></div>
+			</div>
+	</div>
+{% endblock %}

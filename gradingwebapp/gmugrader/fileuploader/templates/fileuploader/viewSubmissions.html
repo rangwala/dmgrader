@@ -1,19 +1,33 @@
 {% extends "base.html" %}
 
-{% load staticfiles %}
-
-
 {% block content %}
 
 {% if solutions.count > 0 %}
-
+<br>
+<table class="table mytable" style="width:130%">
+	<thead>
+		<tr>
+			<th>Student Name</th>
+			<th>Submitted At</th>
+			<th>Assignment</th>
+			<th>Attempt</th>
+			<th>Score</th>
+			<th>Solution File</th>
+		</tr>
+	</thead>
+	<tbody>
 {% for s in solutions %}
-    <div>
-    <h2>{{s.user}} {{s.submission_time}} {{s.assignment}} {{s.attempt}} {{s.score}}  {{s.solution_file}}  </h2>
-    </div>
-
+    <tr>
+    <td>{{s.user}}</td> 
+  	<td>{{s.submission_time}}</td> 
+  	<td>{{s.assignment.name}}</td>
+  	<td>{{s.attempt}}</td>
+  	<td>{{ s.score }}% </td>
+  	<td>{{s.solution_file}}</td>
+    </tr>
 {% endfor %}
-
+	</tbody>
+</table>
 {% endif %}
 
 

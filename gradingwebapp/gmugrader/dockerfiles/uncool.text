@@ -1,0 +1,28 @@
+1. install the docker and docker-compose
+2. change the setting.py in our project:
+   in setting.py, dict DATABASE, change it as:
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'gmugrader',
+        'USER': 'abc',
+        'PASSWORD': '123',
+        'HOST': 'db',
+        'PORT': '5432',
+    }
+}
+
+3. compose our project dictionary (which named dmgrader) as "dmgrader.tar".
+
+4. put following files in same dictionary:
+    dmgrader.tar
+    docker-compose.yml
+    Dockerfile
+    requirements.txt
+    run_server.sh
+
+5. in cmd, run "docker-compose up", then we have our project run on the http://127.0.0.1:8000/fileuploader/login/
+It will take a bit long time.....
+
+6. Hopefully it will work on other machine.....

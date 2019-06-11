@@ -1,6 +1,6 @@
 from django.http import HttpResponse,HttpResponseRedirect
 from django.template import loader
-from django.core.urlresolvers import reverse
+from django.urls import *
 
 
 from django.http import Http404

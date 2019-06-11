@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="panel panel-default pretty-forms">
+    <div class="panel-heading"><b>Permissions</b></div>
+    <div class="panel-body">
+        <form role="form" method="post" action="/user/{{editable.id}}">
+          {% csrf_token %}
+          <div class="row">
+              <div class="col-sm-3">Admin:</div>
+              <div class="col-sm-9 text-right"><input type="checkbox" name="user-is_superuser" {% if editable.is_superuser %} checked="checked" {% endif %}/></div>
+          </div><br>
+          <div class="row">
+            <div class="col-sm-3">Professor:</div>
+            <div class="col-sm-9 text-right"><input type="checkbox" name="user-is_staff" {% if editable.is_staff %} checked="checked" {% endif %}/></div>
+        </div><br>
+        <br>
+          <div class="row">
+              <div class="col-sm-12 text-right">
+                  <button class="button pretty-forms" type="submit">Update</button>
+              </div>
+          </div>
+  </form>
+    </div>
+  </div>    
+{% endblock %}
