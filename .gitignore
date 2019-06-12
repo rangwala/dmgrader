@@ -1,0 +1,8 @@
+/dmgrader
+/*.pyc
+__pycache__/
+**/.DS_Store
+.python-version
+list/
+uploaded_files/
+files/
