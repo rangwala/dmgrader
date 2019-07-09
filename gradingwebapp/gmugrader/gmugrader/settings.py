@@ -25,7 +25,7 @@ SECRET_KEY = '&k$$%(h$#hn7uq61*xyn38)hchj(k7n5^8w^=sbbcy@^obmdh&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -111,16 +111,31 @@ WSGI_APPLICATION = 'gmugrader.wsgi.application'
 #     }
 # }
 
+
+# settings.py
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'gmugrader',
-        'USER': 'olgalorenz',
-        'PASSWORD': ' ',
-        'HOST': 'localhost',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'HOST': 'db', # set in docker-compose.yml
+        'PORT': 5432 # default postgres port
     }
 }
+
+
+
+
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME': 'gmugrader',
+#        'USER': 'abc',
+#        'PASSWORD': '123',
+#        'HOST': '0.0.0.0',
+#        'PORT': '',
+#    }
+#}
 
 
 # Password validation
