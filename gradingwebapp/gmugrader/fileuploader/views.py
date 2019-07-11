@@ -112,7 +112,7 @@ def newCourse(request):
     args.update(csrf(request))
     args['user'] = request.user
     args['form'] = form
-    return render_to_response('fileuploader/newCourse.html', args)
+    return render_to_response('fileuploader/newcourse.html', args)
 
 @superuser_or_staff
 def createCourse(request):
@@ -130,16 +130,16 @@ def createCourse(request):
 @superuser_or_staff
 def editCourse(request, course_id):
     course = Course.objects.filter(id=course_id).first()
-    if request.user.is_superuser or course in request.user.course_set():
-        form = CourseForm()
-        args = {}
-        args.update(csrf(request))
-        args['user'] = request.user
-        args['course'] = course
-        args['form'] = form
-        return render_to_response('fileuploader/editCourse.html', args)
-    else:
-        return HttpResponseRedirect('/fileuploader/login/')
+#    if  course in request.user.course_set():
+    form = CourseForm()
+    args = {}
+    args.update(csrf(request))
+    args['user'] = request.user
+    args['course'] = course
+    args['form'] = form
+    return render_to_response('fileuploader/editCourse.html', args)
+   # else:
+   #     return HttpResponseRedirect('/fileuploader/login/')
     
 def updateCourse(request, course_id):
     course = Course.objects.filter(id=course_id).first()
@@ -168,9 +168,9 @@ def updateCourse(request, course_id):
 
 """
 
-@login_required
+#@login_required
 def computeMetrics (predfile, solfile, scoring_method):
-    pdb.set_trace()
+    #pdb.set_trace()
     myPredFile = open (settings.MEDIA_ROOT + str(predfile), 'r')
     #myPredFile = open (settings.MEDIA_ROOT +  '/solution_files/sol.txt', 'r')
     myTrueFile = open (settings.MEDIA_ROOT + str(solfile), 'r')
