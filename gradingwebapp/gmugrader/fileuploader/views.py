@@ -171,9 +171,9 @@ def updateCourse(request, course_id):
 #@login_required
 def computeMetrics (predfile, solfile, scoring_method):
     #pdb.set_trace()
-    myPredFile = open (settings.MEDIA_ROOT + str(predfile), 'r')
+    myPredFile = open (predfile, 'r')
     #myPredFile = open (settings.MEDIA_ROOT +  '/solution_files/sol.txt', 'r')
-    myTrueFile = open (settings.MEDIA_ROOT + str(solfile), 'r')
+    myTrueFile = open (solfile, 'r')
     predictions = []
     ground      = []
     for predline in myPredFile:
