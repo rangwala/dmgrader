@@ -156,7 +156,11 @@ USE_L10N = True
 USE_TZ = True
 
 #MEDIA_ROOT='/files/'
-MEDIA_ROOT='~/dmgrader/gradingwebapp/files/'
+#MEDIA_ROOT='~/dmgrader/gradingwebapp/files/'
+
+MEDIA_ROOT='/Users/huzefa/new-dm/dmgrader/gradingwebapp/files/'
+
+
 
 MEDIA_URL = '/files/'
 
