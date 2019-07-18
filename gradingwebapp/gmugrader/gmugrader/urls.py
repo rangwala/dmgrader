@@ -24,7 +24,7 @@ from fileuploader import views as fileuploader_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    
+    url('^', include('django.contrib.auth.urls')),    
     url(r'^users$', fileuploader_views.indexUser, name ='users'),
     url(r'^users.html$', fileuploader_views.indexUser, name ='users'),
     url(r'^users\/(?P<user_id>.*)\/?$', fileuploader_views.editUser, name='editUser'),
