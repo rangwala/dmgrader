@@ -700,7 +700,11 @@ def viewSubmissionLogs (request, assignment_id):
     pngfilename =  str('test' + assignment_id + '.png')
     plt.savefig(settings.MEDIA_ROOT + pngfilename)
     args['figplot'] = pngfilename
-
+    
+    #HR Set this UP - 
+    fileurls = settings.MEDIA_URL
+    args['fileurls'] = fileurls
+    #HR SET THIS UP -
 
     return render (request, 'fileuploader/viewSubmissionLogs.html', args)
 
