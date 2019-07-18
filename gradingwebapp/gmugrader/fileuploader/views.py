@@ -629,21 +629,8 @@ def viewPrivateRankings (request, assignment_id):
     args.update (csrf (request))
     assignment = get_object_or_404 (Assignment, pk = assignment_id)
     args ['assignment'] = assignment
-    subset_entries = Solution.objects.filter (assignment=assignment_id).filter(status = "OK").order_by('user','-submission_time')
-    u = "None"
-    leaderboard = []
-    i = 0
-    for entry in subset_entries:
-        if entry.user != u:
-            u = entry.user
-            leaderboard.append(entry)
-            i = i + 1
-    if assignment.scoring_method == 'RE':
-        leaderboard.sort(key = lambda x: x.score)
-    else:
-        leaderboard.sort(key = lambda x: x.score, reverse=True)
-
-    args['submissions'] = leaderboard
+    subset_entries = Solution.objects.filter (assignment=assignment_id).filter(status = "OK").order_by('-score','submission_time')
+    args['submissions'] = subset_entries
     args['user'] = request.user
 
     return render (request, 'fileuploader/viewPrivateRankings.html', args)
@@ -658,24 +645,28 @@ def viewPublicRankings (request, assignment_id):
     args.update (csrf (request))
     assignment = get_object_or_404 (Assignment, pk = assignment_id)
     args ['assignment'] = assignment
-    subset_entries = Solution.objects.filter (assignment=assignment_id).filter(status = "OK").order_by('user','-submission_time')
-    u = "None"
-    leaderboard = []
-    i = 0
-    for entry in subset_entries:
-        if entry.user != u:
-            u = entry.user
-            leaderboard.append(entry)
-            i = i + 1
-    if assignment.scoring_method == 'RE':
-        leaderboard.sort(key = lambda x: x.public_score)
-    else:
-        leaderboard.sort(key = lambda x: x.public_score, reverse=True)
-    args['submissions'] = leaderboard
+    subset_entries = Solution.objects.filter (assignment=assignment_id).filter(status ="OK").order_by('-public_score','submission_time')
+    
+    
+#u = "None"
+#    leaderboard = []
+##    i = 0
+#    for entry in subset_entries:
+#        if entry.user != u:
+#            u = entry.user
+#            leaderboard.append(entry)
+#            i = i + 1
+#    if assignment.scoring_method == 'RE':
+#        subset_entries.sort(key = lambda x: x.public_score)
+#    else:
+#        subset_entries.sort(key = lambda x: x.public_score, reverse=True)
+    
+
+    args['submissions'] = subset_entries
     args['user'] = request.user
     return render (request, 'fileuploader/viewPublicRankings.html', args)
 
-    return render (request, 'fileuploader/viewPublicRankings.html', args)
+#    return render (request, 'fileuploader/viewPublicRankings.html', args)
 
 #student view of Assignments
 #for download
