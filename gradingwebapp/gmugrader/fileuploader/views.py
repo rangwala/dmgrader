@@ -480,7 +480,6 @@ def submitChosenAssignment (request,assignment_id):
                         #Compute the Public_SCORE
                         items.public_score = computeSampledMetrics (items.solution_file, truthFile, obj1.sampling_private,scorer)
                         items.save()
-            pdb.set_trace()
             args={}
             args.update (csrf (request))
             #create a splash page
