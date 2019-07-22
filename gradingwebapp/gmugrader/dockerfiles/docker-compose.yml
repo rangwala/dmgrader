@@ -1,7 +1,7 @@
 version: "3"
 services:
   db:
-    image: postgres:10.1-alpine
+    image: postgres:11.4-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data/
 #db:
@@ -19,6 +19,7 @@ services:
     volumes:
       - .:/code
       - media:/Users/huzefa/new-dm/dmgrader/gradingwebapp/files/
+      - /home/rangwala/new-dm2/dmgrader/files:/Users/huzefa/new-dm/dmgrader/gradingwebapp/files/
     ports:
       - "8000:8000"
     depends_on:
