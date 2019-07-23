@@ -15,13 +15,13 @@ body {
 	border: 1px solid #000;
 }
 
-#content {
+/* #content {
 	float: left;
 	width: 600px;
 	border: 1px solid #f00;
 	padding: 10px;
 	line-height: 36px;
-}
+} */
 
 label, input {
 	float: left;
@@ -44,4 +44,3 @@ li {
 .clearfix {
 	clear: both;
 }
-
