@@ -1,8 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 	<div>
-		
-		<h2>All Users</h2>
+		{% if request.user.is_superuser %}
+			<h2>All Users</h2>
+		{% else %}
+			<h2>My Students</h2>
+		{% endif %}
 			<br>
 			<table class="table mytable">
 				<thead>
@@ -12,22 +15,28 @@
                         <th>Email</th>
 						<th>Username</th>
 						<th>Status</th>
+						<th>Enrolled Courses</th>
 					</tr>
 				</thead>
 				<tbody>
 					{% for u in users %}
 						<tr>
-							<td><a href="/users/{{u.id}}">{{ u.first_name }}</a></td>
+							{% if request.user.is_superuser %}
+								<td><a href="/users/{{u.id}}">{{ u.first_name }}</a></td>
+							{% else %}
+								<td>{{ u.first_name }}</a></td>
+							{% endif %}
 							<td>{{ u.last_name }}</td>
 							<td>{{ u.email }}</td>
-                            <td>{{ u.username }}</td> 
+                            <td>{{u.username}}</td> 
                              {% if u.is_superuser %}
                              <td>Admin</td>
                              {% elif u.is_staff %}
                              <td>Instructor</td> 
                              {% else %}
                              <td>Student</td>
-                             {% endif %}
+							 {% endif %}
+							 <td>{{ u.get_courses|linebreaks }}</td>
 						</tr>
 					{% endfor %}
 				</tbody>

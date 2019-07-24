@@ -233,11 +233,16 @@ def computeMetrics (predfile, solfile, scoring_method):
 """
 
 @login_required
-@superuser_only
+@superuser_or_staff
 def indexUser(request):
     args = {}
     args["user"] = request.user
-    args["users"] = User.objects.all()
+    if request.user.is_superuser:
+        args["users"] = User.objects.all()
+    else:
+        courses =  Course.objects.filter(user=request.user.id).values_list('id', flat=True)
+        enrolled = Enrolled.objects.filter(course_id__in=courses).values_list('user_id', flat=True)
+        args["users"] = User.objects.filter(id__in=enrolled)
     return render_to_response('users.html',args)
     
 
@@ -543,9 +548,14 @@ def thanksSubmissions (request):
 
 @superuser_or_staff
 def viewSubmissions (request):
+    current_user = request.user
     args = {}
     args.update (csrf (request))
-    args['solutions'] = Solution.objects.all()
+    if not current_user.is_superuser:
+        sc=Assignment.objects.filter(user=current_user).values_list('id', flat=True)
+        args['solutions'] = Solution.objects.filter(assignment_id__in=sc)
+    else:
+        args['solutions'] = Solution.objects.all()
     args['user'] = request.user
     return render_to_response ('fileuploader/viewSubmissions.html', args)
 
@@ -598,6 +608,10 @@ def myAssignments (request):
     args['user'] = current_user
     courses = Course.objects.filter(id__in = Enrolled.objects.filter(user = current_user).values('course_id'))
     assignments = Assignment.objects.filter(course_id__in = courses)
+    numsubs = []
+    for a in assignments:
+        numsubs.append(Solution.objects.filter(assignment=a.id, user=current_user.id).count())
+    args['numsubs'] = numsubs
     args['assignments'] = assignments
     args['today'] = timezone.now()
     return render_to_response('fileuploader/myAssignments.html',args)

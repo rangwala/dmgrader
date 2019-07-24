@@ -4,25 +4,30 @@
 {%block content %}
 
 
-<h2>Public Leaderboard: <br></h2>
-<h2> {{ assignment.name}}</h2>
+<h2>Private Leaderboard for {{ assignment.name }}</h2>
+ <h4>{{assignment.course.full_name}}</h4>
+ <br>
 
 {% if submissions.count > 0 %}
 
 <table class="table mytable" style="width: 100%">
+<thead>
 <tr>
 <th> Rank </th>
 <th> User </th>
 <th> Submission Time </th>
 <th> Public Score </th>
 <th> Private Score </th>
-</th>
+</tr>
+</thead>
 
+<tbody>
 
 {% for s in submissions %}
     <tr>
     <td> {{forloop.counter}} </td> <td> {{s.user}} </td> <td>{{s.submission_time}} </td> <td> {{s.public_score}} </td> <td> <b> {{s.score}} </b> </td></tr>  
 {%endfor %}
+</tbody>
 </table>
 {%endif %}
 
