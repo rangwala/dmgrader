@@ -28,7 +28,16 @@ from .classes.enrolled import Enrolled
 from .helpers.file_operations import get_upload_file_name
 
 #from tinymce.models import HTMLField
+def get_courses(self):
+    coursesString = ""
+    enrollments = Enrolled.objects.filter(user_id=self.id).values_list("course_id", flat=True)
+    courses = Course.objects.filter(id__in=enrollments)
+    for course in courses:
+        coursesString += course.full_name()
+        coursesString += "\n"
+    return coursesString
 
+User.add_to_class("get_courses", get_courses)
 
 
 
