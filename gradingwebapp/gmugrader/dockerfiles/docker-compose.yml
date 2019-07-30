@@ -20,9 +20,9 @@ services:
     volumes:
       - .:/code
       - media:/Users/huzefa/new-dm/dmgrader/gradingwebapp/files/
-      - /home/rangwala/new-dm2/dmgrader/files:/Users/huzefa/new-dm/dmgrader/gradingwebapp/files/
+#      - /home/rangwala/new-dm2/dmgrader/files:/Users/huzefa/new-dm/dmgrader/gradingwebapp/files/
     ports:
-      - "8000:8000"
+      - "80:80"
     depends_on:
       - db
     restart: always
