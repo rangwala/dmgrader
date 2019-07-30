@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load static %}
+{%block content %}
+
+
+<h2>Public Leaderboard for {{ assignment.name }}</h2>
+ <h4>{{assignment.course.full_name}}</h4>
+ <br>
+{% if submissions %}
+
+<table class="table mytable" style="width: 100%">
+<thead>
+    <th> Rank </th>
+    <th> User </th>
+    <th> Submission Time </th>
+    <th> Public Score </th>
+</thead>
+<tbody>
+
+{% for s in submissions %}
+    <tr>
+    <td> {{forloop.counter}} </td> 
+    <td> {{s.user}} </td> <td>{{s.submission_time}} </td> 
+    <td> {{s.public_score}} </td> 
+</tr>  
+{%endfor %}
+</tbody>
+</table>
+{%endif %}
+
+
+{% endblock %}
+
+

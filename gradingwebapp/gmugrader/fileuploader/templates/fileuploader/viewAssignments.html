@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+
+{% block content %}
+
+{% if assignments.count > 0 %}
+
+
+Current Time: {{currenttime}}
+
+<table class="table mytable" style="width: 100%">
+
+    <thead>
+        <th>Course</th>
+        <th>Details</th>
+        <th>Deadline</th>
+        <th>Attempts</th>
+        <th>Submit</th>
+        <th> Public Leaderboard </th>
+    </thead>
+    <tbody>
+        {% for a in assignments %}
+        <tr>
+            <td>{{ a.course.full_name }}</td>
+            <td><a href="{% url 'fileuploader:viewAssignmentsDetail' a.id %}"> {{a.name}}</a>
+                {%if user.is_staff %}
+                <a href="{% url 'fileuploader:editAssignment' a.id %}"> (EDIT) </a>
+                <a href="{% url 'fileuploader:deleteAssignment' a.id %}" data-confirm="Are you sure?"> (DELETE) </a>
+                {% endif %}
+            </td>
+            <td> {{a.deadline_date}} </td>
+            <td> {{a.uploaded_cnt}}
+            </td>
+            <td>
+                <a href="{% url 'fileuploader:submitChosenAssignment' a.id %}"> Submit </a> </td>
+            </td>
+            <td>
+                <a href="{% url 'fileuploader:viewPublicRankings' a.id %}"> Leaderboard </a>
+                {%if user.is_staff %}
+                <a href="{% url 'fileuploader:viewPrivateRankings' a.id %}"> (Private) </a>
+                <a href="{% url 'fileuploader:viewSubmissionLogs' a.id %}"> (Logs) </a>
+                {% endif %}
+            </td>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+{% else %}
+
+<div>
+
+    <h1> None to Show </h1>
+
+</div>
+
+
+{% endif %}
+
+
+
+{% endblock %}

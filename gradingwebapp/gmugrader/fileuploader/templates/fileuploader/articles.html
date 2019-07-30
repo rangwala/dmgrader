@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+
+{% block content %}
+
+{% if articles.count > 0 %}
+
+{% for article in articles %}
+    <div>
+    
+    <h2>{{article.accuracy}} <a href="/{{article.fileshot}}">{{ article.title }} {{article.fileshot}}</a></h2>
+    </div>
+
+{% endfor %}
+
+{% endif %}
+
+
+<p> None to show! </p>
+
+{% endblock %}

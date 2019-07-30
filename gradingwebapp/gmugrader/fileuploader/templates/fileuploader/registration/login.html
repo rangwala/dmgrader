@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+ 
+{% block content %}
+
+{% if form.errors %}
+    <p class="error">Sorry, that's not a valid username or password</p>
+{% endif %}
+  
+  <div class="panel panel-default pretty-forms">
+	<div class="panel-body">
+		<form role="form" action="/fileuploader/auth/" method="post">
+  		{% csrf_token %}
+		    <input type="text" id="username" name="username" placeholder="User name" class="form-control" required/><br>
+            <input type="password" name="password" value="" id="password" placeholder="Password" class="form-control" required /><br>
+			<div class="row">
+				<div class="col-sm-4">
+					<a href="{% url 'fileuploader:register' %}"> New User </a>
+				</div>
+				<div class="col-sm-8 text-right">
+					<a href="{% url 'password_reset' %}">Forgot Password?</a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12 text-right">
+					<button class="btn btn-success" type="submit" value="Login">Login</button>
+				</div>
+			</div>
+			 
+
+	   </form>
+	</div>
+  </div>
+{% endblock %}

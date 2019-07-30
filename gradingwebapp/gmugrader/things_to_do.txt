@@ -1,0 +1,53 @@
+create a super user [Accessible only to super user]
+
+- Delete Assignment [DONE]
+
+
+- Delete A Submission
+- Delete All Submissions
+
+-- User menu is through the interface.
+
+Validate Submitted Assignments [Reject Submissions] 
+-- Check for columns
+-- Check for entries
+
+
+Allow control of Sampling and Evaluation Metric to use for ranking.
+
+Allow control of how many submissions allowed per 24 hour cycle ? 
+
+OK <--> Allow control of deadlines. 
+
+Make Date Input Nice: https://github.com/asaglimbeni/django-datetime-widget/tree/master/dateTimeExample/formexample
+https://github.com/asaglimbeni/django-datetime-widget
+--> DONE 
+
+
+Test Data
+Train Data
+Description
+Format of the File Example
+Ground Truth
+
+
+* Think of User View of All His Submissions
+* Think of User View of All the Competition i.e., the best
+
+
+Think of Admin View  of All Submission
+Best/User
+Private vs Public Funding 
+
+
+*Make Registration Page Nice
+*Only Allow GMU.edu to login
+
+
+*make private leaderboard 
+dd*** easy
+*** make all submissions available.
+
+
+* security of gt
+* create  a directory structure within the upload_to_file_name"
