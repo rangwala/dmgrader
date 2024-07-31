@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+  {% load i18n %}
+  {{ form.errors }}
+	<div class="panel-body">
+    <form action="createCourse" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="panel panel-default pretty-forms">
+    <div class="panel-heading"><b>Create Course Form</b></div>
+   	<div class="panel-body">
+   		
+   		<div class="form-group">
+      		<label for="className">Course Name</label>
+      		<input  name="name" type="text" class="form-control" ></input>
+    </div>
+      <input type="hidden" name="user" value="{{user.id}}" />
+    	<div class="form-group">
+       		<label for="classnumber">Course Number</label>
+       		<input name="classnum" type="number" class="form-control"></input>
+    	</div>
+    	<div class="form-group">
+    		<label for="classsection">Course section</label>
+     		<input name="section" type="number" class="form-control"></input>
+       	</div>
+		<div class="form-group">
+			 <label for="descriptionArea">Course Description</label>
+       		 <textarea name="description" class="form-control" rows="5" placeholder="A very cool class..." ></textarea>
+       	</div>
+		<div class="form-group">
+    		<label for="Year"> Year</label>
+         	<input name="year" type="number" class="form-control"></input>
+       	</div>
+      
+        <div class="form-group">
+          <label for="Semester">Semester</label>
+          <select name="semester" class="form-control">
+            <option value="Fall">Fall</option>
+            <option value="Spring">Spring</option>
+            <option value="Summer">Summer</option>  
+          </select>
+        </div>
+        
+        <button name="submit" value="Save" type="submit" class="btn btn-success pull-right pretty-forms">Save</button>
+     
+	</div>
+    </div>
+    </div>
+    </form>
+    </div>
+{% endblock %}

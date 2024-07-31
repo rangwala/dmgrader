@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+	<div>
+		
+		<h2>All Users</h2>
+			<br>
+			<table class="table mytable">
+				<thead>
+					<tr>
+						<th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+						<th>Username</th>
+						<th>Status</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for u in users %}
+						<tr>
+							<td><a href="/users/{{u.id}}">{{ u.first_name }}</a></td>
+							<td>{{ u.last_name }}</td>
+							<td>{{ u.email }}</td>
+                            <td>{{ u.username }}</td> 
+                             {% if u.is_superuser %}
+                             <td>Admin</td>
+                             {% elif u.is_staff %}
+                             <td>Instructor</td> 
+                             {% else %}
+                             <td>Student</td>
+                             {% endif %}
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<br>
+			
+	</div>
+{% endblock %}

@@ -1,52 +1,74 @@
 {% extends "base.html" %}
-
 {% block content %}
-{% load staticfiles %}
-
-
-{% load i18n %}
-
-<head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-
-
-{% if bootstrap == 3 %}
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <title>Boostrap 3 django-datetime-widget demo</title>
-    {% else %}
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/2.3.2/css/bootstrap.min.css">
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
-    <title>Boostrap 2 django-datetime-widget demo</title>
-    {% endif %}
-</head>
-
-
-
-<form action="createAssignment" method="post" enctype="multipart/form-data">{% csrf_token %}
-{{form.media}}
-{% for field in form.visible_fields %}
-    <div class="fieldWrapper">
-        {{ field.errors }}
-        {{ field.label_tag}} {{field}}  
-    </div>
-{% endfor %}
-
-
-
-
-<div class="padded-row">
-
-<input type="submit" name="submit" value="Save">
-
+  {% load i18n %}
+  {{ form.errors }}
+  <div class="panel panel-default pretty-forms">
+    <div class="panel-heading"><b>New Assignment</b></div>
+    <div class="panel-body">
+      <form action="createAssignment" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="assignmentName">Project name</label>
+          <input  name="name" type="text" class="form-control" id="assignmentName"></input>
+        </div>
+        <div class="form-group">
+          <label for="descriptionArea">Assignment Description</label>
+          <textarea name="description" class="form-control" id="descriptionArea" rows="5" placeholder="A very cool project..." value="{{form.description.value}}">{{form.description.value}}</textarea>
+        </div>
+        <div class="form-group">
+          <label for="deadlineDate">Deadline date</label>
+          <input name="deadline_date" type="date" class="form-control" id="deadlineDate"></input>
+        </div>
+        <div class="form-group">
+          <label for="groundTruthFile">Ground truth</label>
+          <input name="ground_truth" type="file" id="groundTruthFile">
+        </div>
+        <div class="form-group">
+          <label for="testDataFile">Test data</label>
+          <input name="test_data" type="file" id="testDataFile">
+        </div>
+        <div class="form-group">
+          <label for="trainDataFile">Train data</label>
+          <input name="train_data" type="file" id="trainDataFile">
+        </div>
+        <div class="form-group">
+          <label for="formatExampleFile">Format example</label>
+          <input name="format_example" type="file" id="formatExampleFile">
+        </div>
+        <div class="form-group">
+          <label for="subsPerDay">Submissions per day</label>
+          <input name="num_subs_per_day" type="number" class="form-control" id="subsPerDay"></input>
+        </div>
+        <div class="form-group">
+          <label for="hiddenStatus">Hidden status</label>
+          <input name="hidden_status" type="text" class="form-control" id="hiddenStatus"></input>
+        </div>
+        <div class="form-group">
+          <label for="scoringMethod">Scoring method</label>
+          <select name="scoring_method" class="form-control" id="scoringMethod">
+            <option value="AC">Accuracy</option>
+            <option value="F1">F1-Score</option>
+            <option value="V1">V-measure</option>
+            <option value="RE">rmse</option>
+            <option value="RC">RC</option>
+            <option value="OT">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="samplingPrivate">Sampling private</label>
+          <input name="sampling_private" type="number" class="form-control" id="samplingPrivate"></input>
+        </div>
+        <div class="form-group">
+          <label for="className">Class name</label>
+          <select name="course" class="form-control" id="className">
+            {% for c in courses %}
+              <option value="{{c.pk}}">{{ c.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <button name="submit" value="Save" type="submit" class="btn btn-success pull-right pretty-forms">Save</button>
+      </div>
+    </form>
+  </div>
 </div>
-</form>
-
-{% endblock %}
+  {% endblock %}

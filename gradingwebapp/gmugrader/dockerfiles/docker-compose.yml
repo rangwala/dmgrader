@@ -1,0 +1,36 @@
+version: "3"
+services:
+  db:
+    image: postgres:11.4-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+    environment:
+      - POSTGRES_USER=abc
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_DB=gmugrader
+#db:
+#    image: postgres
+#    environment:
+#      - POSTGRES_USER=abc
+#      - POSTGRES_PASSWORD=123
+
+#- POSTGRES_DB=gmugrader
+
+
+  web:
+    build: .
+    command: sh ./dockerfiles/run_server.sh
+    volumes:
+      - .:/code
+      - media:/Users/huzefa/new-dm/dmgrader/gradingwebapp/files/
+      - /home/rangwala/new-dm2/dmgrader/files:/Users/huzefa/new-dm/dmgrader/gradingwebapp/files/
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+
+volumes:
+  postgres_data:
+  media:

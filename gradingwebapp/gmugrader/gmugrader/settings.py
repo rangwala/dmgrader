@@ -25,7 +25,7 @@ SECRET_KEY = '&k$$%(h$#hn7uq61*xyn38)hchj(k7n5^8w^=sbbcy@^obmdh&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -42,16 +42,32 @@ INSTALLED_APPS = [
     #'fileuploader',
     'tinymce',
     'datetimewidget',
+    'bootstrap3',
+    'django_extensions'
 ]
 
-MIDDLEWARE_CLASSES = [
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
+}
+
+
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'minervsnet@gmail.com'
+EMAIL_HOST_PASSWORD = 'hacPERL2!'
+EMAIL_PORT = 587
+
+
+MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
 ]
@@ -88,12 +104,39 @@ WSGI_APPLICATION = 'gmugrader.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
+
+# settings.py
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'gmugrader',
+        'USER': 'abc',
+	'PASSWORD':'123'
+        'HOST': 'db', # set in docker-compose.yml
+        'PORT': 5432 # default postgres port
     }
 }
+
+
+
+
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME': 'gmugrader',
+#        'USER': 'abc',
+#        'PASSWORD': '123',
+#        'HOST': '0.0.0.0',
+#        'PORT': '',
+#    }
+#}
 
 
 # Password validation
@@ -114,7 +157,11 @@ USE_L10N = True
 USE_TZ = True
 
 #MEDIA_ROOT='/files/'
-MEDIA_ROOT='/Users/huzefa/dmgrader/gradingwebapp/files/'
+#MEDIA_ROOT='~/dmgrader/gradingwebapp/files/'
+
+MEDIA_ROOT='/Users/huzefa/new-dm/dmgrader/gradingwebapp/files/'
+
+
 
 MEDIA_URL = '/files/'
 
@@ -122,6 +169,12 @@ APPEND_SLASH = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
+# 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "fileuploader/static"),
+)
+
+STATIC_URL = '/static/'
 
 STATIC_URL = '/fileuploader/static/'
 
@@ -143,3 +196,4 @@ TINYMCE_SPELLCHECKER = True
 
 USE_TZ=True
 TIME_ZONE='America/New_York'
+

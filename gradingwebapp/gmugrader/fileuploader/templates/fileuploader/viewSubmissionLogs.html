@@ -2,68 +2,57 @@
 {% load staticfiles %}
 {% load static %}
 {%block content %}
-
-
-
-<table>
-<th>
-<h1>{{ assignment.name}}</h1>
-</th>
-<tr>
-<td>
-<b> Published Date: </b> <br> {{assignment.pub_date}}
-</td>
-</tr>
-<td>
-<b> Deadline Date: </b>  <br> {{assignment.deadline_date}}
-</td>
-<tr>
-</table>
-
+<div class="panel panel-default pretty-forms">
+	<div class="panel-heading"><b>{{ assignment.name}}</b></div>
+	<div class="panel-body">
+		<b> Published Date: </b> <br> {{assignment.pub_date}}
+		<b> Deadline Date: </b>  <br> {{assignment.deadline_date}}
+	</div>
+</div>
 {# {{figplot}}#}
-<img src = "http://127.0.0.1:8000/files/{{figplot}}" >  </img> 
-
-
+<div class="panel panel-default pretty-forms">
+	<img src = "http://127.0.0.1:8000/files/{{figplot}}" >  </img>
+</div>
 {% if submissions.count > 0 %}
-<h1> Submission Log: </h1>
-<table> 
-<tr>
-<th>
-User
-</th>
-<th>
-Submission Time
-</th>
-<th>
-Status
-</th>
-<th>
-Public Score
-</th>
-<th>
-Private Score
-</th>
-<th>
-Uploaded file
-</th>
-</tr>
-{% for s in submissions %}
-    <tr>
-    <td> {{s.user}} </td> 
-    <td>{{s.submission_time}} </td>  
-    <td> {{s.status}} </td>
-    <td> {{s.public_score}} </td> 
-    <td> {{s.score}} </td>
-    <td> <a href="{{fileurls}}{{s.solution_file}}"> Uploaded File </a> </td>
-    </tr>  
-{%endfor %}
-</table>
-{%endif %}
-
-
-</tr>
-</table>
-
-{% endblock %}
-
-
+	<div class="panel panel-default pretty-forms">
+		<div class="panel-heading"><b>Submission Log</b></div>
+		<div class="panel-body">
+			
+            <table class="table mytable" style="width: 100%">
+				<tr>
+					<th>
+						User
+					</th>
+					<th>
+						Submission Time
+					</th>
+					<th>
+						Status
+					</th>
+					<th>
+						Public Score
+					</th>
+					<th>
+						Private Score
+					</th>
+					<th>
+						Uploaded file
+					</th>
+				</tr>
+				{% for s in submissions %}
+					<tr>
+						<td> {{s.user}} </td>
+						<td>{{s.submission_time}} </td>
+						<td> {{s.status}} </td>
+						<td> {{s.public_score}} </td>
+						<td> {{s.score}} </td>
+						<td> <a href="{{fileurls}}{{s.solution_file}}"> Uploaded File </a> </td>
+					</tr>
+					{%endfor %}
+				</table>
+				{%endif %}
+			</tr>
+		</table>
+	</div>
+</div>
+	{% endblock %}

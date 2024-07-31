@@ -9,14 +9,15 @@
 
 {% if submissions.count > 0 %}
 
-<table>
+
+<table class="table mytable" style="width: 100%">
+
 <tr>
 <th> Rank </th>
 <th> User </th>
 <th> Submission Time </th>
 <th> Public Score </th>
 </th>
-
 
 {% for s in submissions %}
     <tr>
